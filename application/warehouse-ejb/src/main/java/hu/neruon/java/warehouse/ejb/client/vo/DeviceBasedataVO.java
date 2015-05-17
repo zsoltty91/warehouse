@@ -2,6 +2,7 @@ package hu.neruon.java.warehouse.ejb.client.vo;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 public class DeviceBasedataVO implements Serializable {
 
@@ -17,14 +18,14 @@ public class DeviceBasedataVO implements Serializable {
 
 	private Boolean visible;
 
-	private Collection<DevicePropertyVO> properties;
+	private List<DevicePropertyVO> properties;
 
 	public DeviceBasedataVO() {
 		super();
 	}
 
 	public DeviceBasedataVO(Long id, String manufacturer, String type, String description, Boolean visible,
-			Collection<DevicePropertyVO> properties) {
+			List<DevicePropertyVO> properties) {
 		super();
 		this.id = id;
 		this.manufacturer = manufacturer;
@@ -66,11 +67,11 @@ public class DeviceBasedataVO implements Serializable {
 		this.visible = visible;
 	}
 
-	public Collection<DevicePropertyVO> getProperties() {
+	public List<DevicePropertyVO> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(Collection<DevicePropertyVO> properties) {
+	public void setProperties(List<DevicePropertyVO> properties) {
 		this.properties = properties;
 	}
 

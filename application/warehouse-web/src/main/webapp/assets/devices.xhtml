@@ -7,14 +7,59 @@
 	<h:form>
 		<p:panel id="devices">
 
+			<p:dialog widgetVar="createDeviceDialog"
+				header="#{out.newDeviceHeader}">
+				<h:outputText value="#{out.manufacturer}:" />
+				<p:inputText value="#{deviceController.createDevice.manufacturer}" />
+				<br />
+				<h:outputText value="#{out.type}:" />
+				<p:inputText value="#{deviceController.createDevice.type}" />
+				<br />
+				<h:outputText value="#{out.description}:" />
+				<p:inputTextarea
+					value="#{deviceController.createDevice.description}" />
+				<br />
+				<h:outputText value="#{out.manufacturer}:" />
+				<p:selectOneMenu
+					value="#{deviceController.createDeviceProperty.property}">
+					<f:selectItems value="#{deviceController.deviceProperties}"
+						var="deviceProperty" itemLabel="#{deviceProperty.name}" />
+					<p:ajax event="change" listener="#{deviceController.addDeviceProperty}"/>
+				</p:selectOneMenu>
+				<p:inputText value="#{deviceController.createDeviceProperty.value}">
+					<p:ajax event="keyup" listener="#{deviceController.addDeviceProperty}"/>
+				</p:inputText>
+				<p:commandButton value="#{out.add}">
+					<p:ajax listener="#{deviceController.addDeviceProperty}"
+						update="createDeviceProperties"></p:ajax>
+				</p:commandButton>
+				<br />
+				<h:outputText value="#{out.properties}:" />
+				<br />
+				<p:dataTable id="createDeviceProperties"
+					value="#{deviceController.createDevice.properties}"
+					var="deviceProperty">
+					<p:column headerText="#{out.propertyName}">
+						<h:outputText value="#{deviceProperty.property.name}" />
+					</p:column>
+					<p:column headerText="#{out.propertyValue}">
+						<h:outputText value="#{deviceProperty.value}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="#{out.create}">
+				</p:commandButton>
+			</p:dialog>
+			<p:commandButton type="button"
+				onclick="PF('createDeviceDialog').show()"
+				value="#{out.newDeviceButton}" />
 			<p:dataTable var="device" value="#{deviceController.deviceBasedatas}"
 				selectionMode="single"
 				selection="#{deviceController.selectedDevice}" rowKey="#{device.id}">
 
 				<p:ajax event="rowSelect" listener="#{deviceController.onSelect}"
-					update="device-details" />
-				<p:ajax event="rowUnselect"
-					listener="#{deviceController.onSelect}" update="device-details" />
+					update=":#{p:component('device-details')}" />
+				<p:ajax event="rowUnselect" listener="#{deviceController.onSelect}"
+					update=":#{p:component('device-details')}" />
 				<p:column headerText="#{out.manufacturer}">
 					<h:outputText value="#{device.manufacturer}" />
 				</p:column>
@@ -24,7 +69,7 @@
 				</p:column>
 
 				<p:column headerText="#{out.visible}">
-					<h:outputText value="#{device.visible}" />
+					<h:outputText value="#{out[device.visible]}" />
 				</p:column>
 
 				<p:column headerText="#{out.operations}">
@@ -33,9 +78,25 @@
 				</p:column>
 			</p:dataTable>
 
-			<p:panel id="device-details" rendered="#{not empty deviceController.selectedDevice}">
-			lll
-			</p:panel>
+			<p:outputPanel id="device-details">
+				<h:outputText
+					value="#{deviceController.selectedDevice.manufacturer} #{deviceController.selectedDevice.type}" />
+				<h:outputText value="#{out.description}:" />
+				<br />
+				<h:outputText value="#{deviceController.selectedDevice.description}" />
+				<br />
+				<h:outputText value="#{out.properties}:" />
+				<br />
+				<p:dataTable value="#{deviceController.selectedDevice.properties}"
+					var="deviceProperty">
+					<p:column headerText="#{out.propertyName}">
+						<h:outputText value="#{deviceProperty.property.name}" />
+					</p:column>
+					<p:column headerText="#{out.propertyValue}">
+						<h:outputText value="#{deviceProperty.value}" />
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
 		</p:panel>
 	</h:form>
 </ui:composition>
