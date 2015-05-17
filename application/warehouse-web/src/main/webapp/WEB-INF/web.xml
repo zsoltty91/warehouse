@@ -51,8 +51,8 @@
 	</filter-mapping>
 
 	<ejb-local-ref>
-		<ejb-ref-name>hu.neuron.warehouse.ejb.PropertyServiceBeanLocal</ejb-ref-name>
-		<local>hu.neruon.java.warehouse.ejb.client.service.PropertyServiceBeanLocal</local>
+		<ejb-ref-name>hu.neuron.warehouse.ejb.DeviceServiceFacadeBeanLocal</ejb-ref-name>
+		<local>hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanLocal</local>
 	</ejb-local-ref>
 	
 	<welcome-file-list><welcome-file>index.xhtml</welcome-file></welcome-file-list>

@@ -4,19 +4,30 @@ import hu.neuron.java.warehouse.common.dao.PropertyDao;
 import hu.neuron.java.warehouse.common.dto.PropertyDTO;
 import hu.neuron.java.warehouse.core.entity.Property;
 
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional(propagation=Propagation.SUPPORTS)
-public class PropertyDaoImpl extends BaseDaoImpl<Property, PropertyDTO>
-		implements BaseConvertDao<Property, PropertyDTO>, PropertyDao {
+@Transactional(propagation = Propagation.SUPPORTS)
+public class PropertyDaoImpl extends BaseDaoImpl<Property, PropertyDTO> implements
+		BaseConvertDao<Property, PropertyDTO>, PropertyDao {
 
 	@Override
 	public PropertyDTO findPropertyByName(String name) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Property property;
+		try {
+			Query query = entityManager.createNamedQuery("findPropertyByName", entityClass);
+			query.setParameter("pName", name);
+
+			property = (Property) query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+		return toDto(property);
 	}
 
 	@Override
@@ -35,8 +46,7 @@ public class PropertyDaoImpl extends BaseDaoImpl<Property, PropertyDTO>
 			return new PropertyDTO();
 		}
 
-		PropertyDTO propertyDTO = new PropertyDTO(entity.getName(),
-				entity.getId());
+		PropertyDTO propertyDTO = new PropertyDTO(entity.getName(), entity.getId());
 		return propertyDTO;
 	}
 

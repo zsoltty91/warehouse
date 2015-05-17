@@ -3,10 +3,14 @@ package hu.neruon.java.warehouse.ejb;
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.neruon.java.warehouse.ejb.client.service.PropertyServiceBeanLocal;
-import hu.neruon.java.warehouse.ejb.client.service.PropertyServiceBeanRemote;
+import hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanLocal;
+import hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanRemote;
+import hu.neruon.java.warehouse.ejb.client.vo.DeviceBasedataVO;
 import hu.neruon.java.warehouse.ejb.client.vo.PropertyVO;
+import hu.neruon.java.warehouse.ejb.converter.DeviceBaseDataConverter;
+import hu.neuron.java.warehouse.common.dao.DeviceBasedataDao;
 import hu.neuron.java.warehouse.common.dao.PropertyDao;
+import hu.neuron.java.warehouse.common.dto.DeviceBaseDataDTO;
 import hu.neuron.java.warehouse.common.dto.PropertyDTO;
 
 import javax.ejb.Stateless;
@@ -24,12 +28,15 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 @Interceptors(SpringBeanAutowiringInterceptor.class)
 @TransactionAttribute(TransactionAttributeType.SUPPORTS)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class PropertyServiceBean implements PropertyServiceBeanLocal, PropertyServiceBeanRemote {
+public class DeviceServiceFacadeBean implements DeviceServiceFacadeBeanLocal, DeviceServiceFacadeBeanRemote {
 
-	private static final Logger logger = Logger.getLogger(PropertyServiceBean.class);
-	
+	private static final Logger logger = Logger.getLogger(DeviceServiceFacadeBean.class);
+
 	@Autowired
 	PropertyDao propertyDao;
+
+	@Autowired
+	DeviceBasedataDao deviceBasedataDao;
 
 	@Override
 	public List<PropertyVO> findAllProperty() throws Exception {
@@ -49,6 +56,13 @@ public class PropertyServiceBean implements PropertyServiceBeanLocal, PropertySe
 		}
 		logger.error("find vege\n\n\n\n\n\n\n");
 		return propertyVOs;
+	}
+
+	@Override
+	public List<DeviceBasedataVO> findAllDeviceBaseData() throws Exception {
+		List<DeviceBaseDataDTO> deviceBasedatas = deviceBasedataDao.findAll();
+
+		return DeviceBaseDataConverter.toVO(deviceBasedatas);
 	}
 
 }

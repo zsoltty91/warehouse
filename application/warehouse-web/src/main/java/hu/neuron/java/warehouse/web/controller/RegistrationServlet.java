@@ -1,6 +1,6 @@
 package hu.neuron.java.warehouse.web.controller;
 
-import hu.neruon.java.warehouse.ejb.client.service.PropertyServiceBeanLocal;
+import hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanLocal;
 import hu.neruon.java.warehouse.ejb.client.vo.PropertyVO;
 
 import java.io.IOException;
@@ -19,10 +19,10 @@ import org.apache.log4j.Logger;
  * This servlet handles the message box.
  */
 @WebServlet(name = "/servlet", urlPatterns = "/servlet")
-@EJB(name = "hu.neuron.warehouse.ejb.PropertyServiceBeanLocal", beanInterface = PropertyServiceBeanLocal.class)
+@EJB(name = "hu.neuron.warehouse.ejb.DeviceServiceFacadeBeanLocal", beanInterface = DeviceServiceFacadeBeanLocal.class)
 public class RegistrationServlet extends HttpServlet {
 	@EJB
-	PropertyServiceBeanLocal propertyService;
+	DeviceServiceFacadeBeanLocal deviceService;
 
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(RegistrationServlet.class);
@@ -37,7 +37,7 @@ public class RegistrationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
 		try {
-			List<PropertyVO> s = propertyService.findAllProperty();
+			List<PropertyVO> s = deviceService.findAllProperty();
 			response.getWriter().write("hello");
 
 		} catch (Exception e) {

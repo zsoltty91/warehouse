@@ -10,14 +10,10 @@
 	</ui:define>
 	<ui:define name="pageTitle">#{out.login}</ui:define>
 	<ui:define name="content">
-		<h2>Hello World!kk</h2>
-		<p:dataList value="#{propertyController.properties}" var="prop">
-			
-        #{prop.name}
-    </p:dataList>
-    <p:dataList value="#{propertyController.deviceBasedatas}" var="prop">
-			
-        #{prop.description}
-    </p:dataList>
+		<p:tabView scrollable="true">
+			<p:tab title="#{out.devices}">
+ 				<ui:include src="../assets/devices.xhtml" />
+			</p:tab>
+		</p:tabView>
 	</ui:define>
 </ui:composition>

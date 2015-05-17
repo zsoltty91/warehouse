@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<h:form>
+		<p:panel id="devices">
+
+			<p:dataTable var="device" value="#{deviceController.deviceBasedatas}"
+				selectionMode="single"
+				selection="#{deviceController.selectedDevice}" rowKey="#{device.id}">
+
+				<p:ajax event="rowSelect" listener="#{deviceController.onSelect}"
+					update="device-details" />
+				<p:ajax event="rowUnselect"
+					listener="#{deviceController.onSelect}" update="device-details" />
+				<p:column headerText="#{out.manufacturer}">
+					<h:outputText value="#{device.manufacturer}" />
+				</p:column>
+
+				<p:column headerText="#{out.type}">
+					<h:outputText value="#{device.type}" />
+				</p:column>
+
+				<p:column headerText="#{out.visible}">
+					<h:outputText value="#{device.visible}" />
+				</p:column>
+
+				<p:column headerText="#{out.operations}">
+					<h:outputText value="#{out.inactivate}" /> | 
+        <h:outputText value="#{out.uploadstore}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:panel id="device-details" rendered="#{not empty deviceController.selectedDevice}">
+			lll
+			</p:panel>
+		</p:panel>
+	</h:form>
+</ui:composition>

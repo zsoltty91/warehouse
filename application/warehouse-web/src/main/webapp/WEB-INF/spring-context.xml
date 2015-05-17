@@ -13,8 +13,8 @@
 
 	<context:component-scan base-package="hu.neuron.java.warehouse.web" />
 
-	<jee:local-slsb id="propertyService" jndi-name="hu.neuron.warehouse.ejb.PropertyServiceBeanLocal"
-	business-interface="hu.neruon.java.warehouse.ejb.client.service.PropertyServiceBeanLocal" />
+	<jee:local-slsb id="deviceServiceFacade" jndi-name="hu.neuron.warehouse.ejb.DeviceServiceFacadeBeanLocal"
+	business-interface="hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanLocal" />
 
 	<import resource="classpath:spring-security.xml" />
 
