@@ -4,30 +4,35 @@ import hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanLocal;
 import hu.neruon.java.warehouse.ejb.client.vo.DeviceBasedataVO;
 import hu.neruon.java.warehouse.ejb.client.vo.DevicePropertyVO;
 import hu.neruon.java.warehouse.ejb.client.vo.PropertyVO;
+import hu.neruon.java.warehouse.ejb.client.vo.request.RequestCreateDeviceVO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
+import javax.faces.bean.SessionScoped;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 
 @SessionScoped
 @ManagedBean(name = "deviceController")
-public class DeviceController {
+public class DeviceController implements Serializable {
+
+	private static final long serialVersionUID = -5568624268193063762L;
 
 	private static final Logger logger = Logger.getLogger(DeviceController.class);
 
 	@EJB
 	DeviceServiceFacadeBeanLocal propertyService;
 
-	private List<PropertyVO> deviceProperties;
+	private Map<Long, PropertyVO> deviceProperties;
 
 	private List<DeviceBasedataVO> deviceBasedatas;
 
@@ -39,16 +44,27 @@ public class DeviceController {
 
 	@PostConstruct
 	public void init() {
+		this.deviceProperties = new HashMap<Long, PropertyVO>();
 		try {
-			deviceProperties = propertyService.findAllProperty();
+			List<PropertyVO> properties = propertyService.findAllProperty();
+			for (PropertyVO property : properties) {
+				this.deviceProperties.put(property.getId(), property);
+			}
 			deviceBasedatas = propertyService.findAllDeviceBaseData();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		this.createDevice = new DeviceBasedataVO();
+		initCreateDeviceProperty();
+	}
+
+	private void initCreateDeviceProperty() {
 		this.createDeviceProperty = new DevicePropertyVO();
-		createDeviceProperty.setProperty(deviceProperties.get(0));
+		PropertyVO prop = deviceProperties.values().toArray(new PropertyVO[deviceProperties.values().size()])[0];
+		this.createDeviceProperty.setProperty(new PropertyVO());
+		this.createDeviceProperty.getProperty().setId(prop.getId());
+		this.createDeviceProperty.getProperty().setName(prop.getName());
 	}
 
 	public void onSelect(SelectEvent event) {
@@ -64,8 +80,23 @@ public class DeviceController {
 				properties = new ArrayList<DevicePropertyVO>();
 				this.createDevice.setProperties(properties);
 			}
+			createDeviceProperty.getProperty().setName(
+					this.deviceProperties.get(createDeviceProperty.getProperty().getId()).getName());
 			properties.add(createDeviceProperty);
-			createDeviceProperty = new DevicePropertyVO();
+			initCreateDeviceProperty();
+		}
+	}
+
+	public void createDevice() {
+		System.out.println(this.createDevice);
+		RequestCreateDeviceVO request = new RequestCreateDeviceVO();
+		request.setDeviceBasedatas(new ArrayList<DeviceBasedataVO>());
+		request.getDeviceBasedatas().add(createDevice);
+		try {
+			propertyService.createDevices(request);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -73,12 +104,8 @@ public class DeviceController {
 		return this.selectedDevice != null;
 	}
 
-	public List<PropertyVO> getDeviceProperties() {
-		return deviceProperties;
-	}
-
-	public void setDeviceProperties(List<PropertyVO> deviceProperties) {
-		this.deviceProperties = deviceProperties;
+	public Collection<PropertyVO> getDeviceProperties() {
+		return deviceProperties.values();
 	}
 
 	public List<DeviceBasedataVO> getDeviceBasedatas() {

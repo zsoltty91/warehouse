@@ -25,9 +25,14 @@ public class DeviceBasedataDaoImpl extends BaseDaoImpl<DeviceBasedata, DeviceBas
 
 	@Override
 	public DeviceBasedata toEntity(DeviceBaseDataDTO dto, DeviceBasedata entity) {
-		if (dto == null || dto.getId() == null) {
+		if (dto == null) {
 			return new DeviceBasedata();
 		}
+
+		if (entity == null) {
+			entity = new DeviceBasedata();
+		}
+
 		entity.setId(dto.getId());
 		entity.setDescription(dto.getDescription());
 		entity.setManufacturer(dto.getManufacturer());

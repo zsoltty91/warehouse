@@ -2,8 +2,7 @@ package hu.neuron.java.warehouse.core.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +13,7 @@ public class DeviceProperty extends BaseEntity {
 
 	String value;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "property_fk", nullable = false)
 	Property property;
 

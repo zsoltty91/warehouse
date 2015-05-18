@@ -32,8 +32,11 @@ public class PropertyDaoImpl extends BaseDaoImpl<Property, PropertyDTO> implemen
 
 	@Override
 	public Property toEntity(PropertyDTO dto, Property entity) {
-		if (dto == null || dto.getId() == null) {
+		if (dto == null) {
 			return new Property();
+		}
+		if (entity == null) {
+			entity = new Property();
 		}
 		entity.setId(dto.getId());
 		entity.setName(dto.getName());

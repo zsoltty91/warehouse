@@ -6,6 +6,8 @@ import hu.neuron.java.warehouse.core.entity.BaseEntity;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,8 +17,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(propagation = Propagation.SUPPORTS)
-public abstract class BaseDaoImpl<E extends BaseEntity, D extends Serializable>
-		implements BaseConvertDao<E, D>, BaseDAO<D> {
+public abstract class BaseDaoImpl<E extends BaseEntity, D extends Serializable> implements BaseConvertDao<E, D>,
+		BaseDAO<D> {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -25,10 +27,8 @@ public abstract class BaseDaoImpl<E extends BaseEntity, D extends Serializable>
 
 	@SuppressWarnings("unchecked")
 	public BaseDaoImpl() {
-		ParameterizedType genericSuperclass = (ParameterizedType) getClass()
-				.getGenericSuperclass();
-		this.entityClass = (Class<E>) genericSuperclass
-				.getActualTypeArguments()[0];
+		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[0];
 	}
 
 	@Override
@@ -65,7 +65,11 @@ public abstract class BaseDaoImpl<E extends BaseEntity, D extends Serializable>
 
 	@Override
 	public Long saveEntity(E entity) throws Exception {
+		entity.setRecDate(new Date());
+		// TODO
+		entity.setRecUser("gep");
 		entityManager.persist(entity);
+		entityManager.flush();
 		return entity.getId();
 	}
 
@@ -92,9 +96,7 @@ public abstract class BaseDaoImpl<E extends BaseEntity, D extends Serializable>
 	@Override
 	public List<E> findAllEntity() throws Exception {
 
-		return entityManager.createQuery(
-				"Select t from " + entityClass.getSimpleName() + " t")
-				.getResultList();
+		return entityManager.createQuery("Select t from " + entityClass.getSimpleName() + " t").getResultList();
 	}
 
 }

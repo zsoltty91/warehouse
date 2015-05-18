@@ -4,6 +4,7 @@ import hu.neuron.java.warehouse.common.dao.DevicePropertyDao;
 import hu.neuron.java.warehouse.common.dto.DevicePropertyDTO;
 import hu.neuron.java.warehouse.common.dto.PropertyDTO;
 import hu.neuron.java.warehouse.core.entity.DeviceProperty;
+import hu.neuron.java.warehouse.core.entity.Property;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,17 +22,22 @@ public class DevicePropertyDaoImpl extends BaseDaoImpl<DeviceProperty, DevicePro
 
 	@Override
 	public DeviceProperty toEntity(DevicePropertyDTO dto, DeviceProperty entity) {
-		if (dto == null || dto.getId() == null) {
+		if (dto == null) {
 			return new DeviceProperty();
 		}
+
+		if (entity == null) {
+			entity = new DeviceProperty();
+		}
+
 		entity.setId(dto.getId());
 		entity.setValue(dto.getValue());
-		// if (dto.getProperty() != null && dto.getProperty().getId() != null) {
-		// Property property = new Property();
-		// property.setId(dto.getProperty().getId());
-		// property.setName(dto.getProperty().getName());
-		// entity.setProperty(property);
-		// }
+		if (dto.getProperty() != null && dto.getProperty().getId() != null) {
+			Property property = new Property();
+			property.setId(dto.getProperty().getId());
+			property.setName(dto.getProperty().getName());
+			entity.setProperty(property);
+		}
 
 		return entity;
 	}
@@ -57,7 +63,8 @@ public class DevicePropertyDaoImpl extends BaseDaoImpl<DeviceProperty, DevicePro
 	public Collection<DevicePropertyDTO> findDevicePropertyByDeviceBasedata(Long id) {
 		ArrayList<DevicePropertyDTO> propertyDtos = new ArrayList<>();
 		try {
-			Query query = entityManager.createNativeQuery("SELECT p FROM device_property p  WHERE p.device_base_fk = :pDeviceBaseDataId", entityClass);
+			Query query = entityManager.createNativeQuery(
+					"SELECT p FROM device_property p  WHERE p.device_base_fk = :pDeviceBaseDataId", entityClass);
 			query.setParameter("pDeviceBaseDataId", id);
 
 			ArrayList<DeviceProperty> properties = (ArrayList<DeviceProperty>) query.getResultList();

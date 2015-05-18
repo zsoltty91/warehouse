@@ -11,6 +11,8 @@
 		
 		<class>hu.neuron.java.warehouse.core.entity.BaseEntity</class>
 		<class>hu.neuron.java.warehouse.core.entity.Property</class>
+		<class>hu.neuron.java.warehouse.core.entity.DeviceProperty</class>
+		<class>hu.neuron.java.warehouse.core.entity.DeviceBasedata</class>
 
 		<properties>
 			<property value="org.hibernate.dialect.MySQLDialect" name="hibernate.dialect" />
