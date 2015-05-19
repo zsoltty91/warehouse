@@ -8,6 +8,9 @@
         <dependent-module archiveName="warehouse-ejb-1.0.jar" deploy-path="/" handle="module:/resource/warehouse-ejb/warehouse-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="warehouse-core-1.0.jar" deploy-path="/lib" handle="module:/resource/warehouse-core/warehouse-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="spring-jdbc-4.1.6.RELEASE.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/springframework/spring-jdbc/4.1.6.RELEASE/spring-jdbc-4.1.6.RELEASE.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>

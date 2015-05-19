@@ -13,6 +13,10 @@
 		<class>hu.neuron.java.warehouse.core.entity.Property</class>
 		<class>hu.neuron.java.warehouse.core.entity.DeviceProperty</class>
 		<class>hu.neuron.java.warehouse.core.entity.DeviceBasedata</class>
+		<class>hu.neuron.java.warehouse.core.entity.Order</class>
+		<class>hu.neuron.java.warehouse.core.entity.OrderItem</class>
+		<class>hu.neuron.java.warehouse.core.entity.Warehouse</class>
+		<class>hu.neuron.java.warehouse.core.entity.User</class>
 
 		<properties>
 			<property value="org.hibernate.dialect.MySQLDialect" name="hibernate.dialect" />

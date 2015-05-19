@@ -10,7 +10,6 @@ import hu.neuron.java.warehouse.core.dao.DeviceBasedataDao;
 import hu.neuron.java.warehouse.core.dao.DevicePropertyDao;
 import hu.neuron.java.warehouse.core.dao.PropertyDao;
 import hu.neuron.java.warehouse.core.entity.DeviceBasedata;
-import hu.neuron.java.warehouse.core.entity.DeviceProperty;
 import hu.neuron.java.warehouse.core.entity.Property;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
-@Stateless(mappedName = "PropertyServiceBean")
+@Stateless(mappedName = "DeviceServiceFacadeBean")
 @Interceptors(SpringBeanAutowiringInterceptor.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -72,34 +71,12 @@ public class DeviceServiceFacadeBean implements DeviceServiceFacadeBeanLocal, De
 	@Override
 	public List<DeviceBasedataVO> createDevices(List<DeviceBasedataVO> deviceBasedatas) throws Exception {
 
-		Long id;
+		List<DeviceBasedataVO> devices = new ArrayList<DeviceBasedataVO>();
+
 		for (DeviceBasedataVO deviceBasedataVO : deviceBasedatas) {
-			Property prop = new Property();
-			prop.setName("alma");
-			prop.setId(4L);
 
-			DeviceProperty dto = new DeviceProperty();
-			dto.setProperty(prop);
-			dto.setValue("value");
-
-			DeviceBasedata basedto = new DeviceBasedata();
-			basedto.setDescription("sdfsfd");
-			basedto.setManufacturer("sdfsf");
-			basedto.setType("ssfd");
-			basedto.setVisible(Boolean.TRUE);
-			basedto.setProperties(new ArrayList<DeviceProperty>());
-			basedto.getProperties().add(dto);
-
-			basedto = deviceBasedataDao.save(basedto);
-			System.out.println(basedto);
-			// DevicePropertyVO property =
-			// deviceBasedataVO.getProperties().get(0);
-			// DevicePropertyDTO dto = DevicePropertyConverter.toDTO(property);
-			// id = devicePropertyDao.save(dto);
-			// System.out.println(id);
-			// id =
-			// deviceBasedataDao.save(DeviceBaseDataConverter.toDTO(deviceBasedataVO));
-			// deviceBasedataVO.setId(id);
+			devices.add(DeviceBaseDataConverter.toVO(deviceBasedataDao.save(DeviceBaseDataConverter
+					.toEntity(deviceBasedataVO))));
 		}
 
 		return deviceBasedatas;
@@ -108,7 +85,6 @@ public class DeviceServiceFacadeBean implements DeviceServiceFacadeBeanLocal, De
 	@Override
 	public List<PropertyVO> createProperties(List<PropertyVO> properties) throws Exception {
 
-		Long id;
 		for (PropertyVO propertyVO : properties) {
 			Property property = propertyDao.save(PropertyConverter.toEntity(propertyVO));
 			propertyVO.setId(property.getId());
