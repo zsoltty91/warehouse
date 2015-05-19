@@ -1,12 +1,9 @@
 package hu.neuron.java.warehouse.core.dao.impl;
 
-import hu.neuron.java.warehouse.common.dao.BaseDAO;
+import hu.neuron.java.warehouse.core.dao.BaseDAO;
 import hu.neuron.java.warehouse.core.entity.BaseEntity;
 
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(propagation = Propagation.SUPPORTS)
-public abstract class BaseDaoImpl<E extends BaseEntity, D extends Serializable> implements BaseConvertDao<E, D>,
-		BaseDAO<D> {
+public abstract class BaseDaoImpl<E extends BaseEntity> implements BaseDAO<E> {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
@@ -27,76 +23,47 @@ public abstract class BaseDaoImpl<E extends BaseEntity, D extends Serializable> 
 
 	@SuppressWarnings("unchecked")
 	public BaseDaoImpl() {
-		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[0];
+		ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+				.getGenericSuperclass();
+		this.entityClass = (Class<E>) genericSuperclass
+				.getActualTypeArguments()[0];
 	}
 
 	@Override
-	public Long save(D dto) throws Exception {
-		return saveEntity(toEntity(dto, null));
-	}
-
-	@Override
-	public void update(D dto) throws Exception {
-		E entity = toEntity(dto, null);
-		this.updateEntity(entity);
-
-	}
-
-	@Override
-	public void delete(Long id) throws Exception {
-		deleteEntity(id);
-	}
-
-	@Override
-	public D find(Long id) throws Exception {
-		return toDto(findEntity(id));
-	}
-
-	@Override
-	public List<D> findAll() throws Exception {
-		List<E> resultList = findAllEntity();
-		List<D> rv = new ArrayList<D>();
-		for (E e : resultList) {
-			rv.add(toDto(e));
-		}
-		return rv;
-	}
-
-	@Override
-	public Long saveEntity(E entity) throws Exception {
+	public E save(E entity) throws Exception {
 		entity.setRecDate(new Date());
 		// TODO
 		entity.setRecUser("gep");
 		entityManager.persist(entity);
-		entityManager.flush();
-		return entity.getId();
+		return entity;
 	}
 
 	@Override
-	public void updateEntity(E entity) throws Exception {
+	public void update(E entity) throws Exception {
 		this.entityManager.merge(entity);
 
 	}
 
 	@Override
-	public void deleteEntity(Long id) throws Exception {
+	public void delete(Long id) throws Exception {
 		E e = this.entityManager.find(entityClass, id);
 		this.entityManager.remove(e);
 
 	}
 
 	@Override
-	public E findEntity(Long id) throws Exception {
+	public E find(Long id) throws Exception {
 		return this.entityManager.find(entityClass, id);
 
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> findAllEntity() throws Exception {
+	public List<E> findAll() throws Exception {
 
-		return entityManager.createQuery("Select t from " + entityClass.getSimpleName() + " t").getResultList();
+		return entityManager.createQuery(
+				"Select t from " + entityClass.getSimpleName() + " t")
+				.getResultList();
 	}
 
 }

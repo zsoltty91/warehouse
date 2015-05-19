@@ -1,25 +1,23 @@
 package hu.neruon.java.warehouse.ejb;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanLocal;
 import hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanRemote;
 import hu.neruon.java.warehouse.ejb.client.vo.DeviceBasedataVO;
-import hu.neruon.java.warehouse.ejb.client.vo.DevicePropertyVO;
 import hu.neruon.java.warehouse.ejb.client.vo.PropertyVO;
 import hu.neruon.java.warehouse.ejb.client.vo.Response.ResponseCreateDeviceVO;
 import hu.neruon.java.warehouse.ejb.client.vo.Response.ResponseCreatePropertyVO;
 import hu.neruon.java.warehouse.ejb.client.vo.request.RequestCreateDeviceVO;
 import hu.neruon.java.warehouse.ejb.converter.DeviceBaseDataConverter;
-import hu.neruon.java.warehouse.ejb.converter.DevicePropertyConverter;
 import hu.neruon.java.warehouse.ejb.converter.PropertyConverter;
-import hu.neuron.java.warehouse.common.dao.DeviceBasedataDao;
-import hu.neuron.java.warehouse.common.dao.DevicePropertyDao;
-import hu.neuron.java.warehouse.common.dao.PropertyDao;
-import hu.neuron.java.warehouse.common.dto.DeviceBaseDataDTO;
-import hu.neuron.java.warehouse.common.dto.DevicePropertyDTO;
-import hu.neuron.java.warehouse.common.dto.PropertyDTO;
+import hu.neuron.java.warehouse.core.dao.DeviceBasedataDao;
+import hu.neuron.java.warehouse.core.dao.DevicePropertyDao;
+import hu.neuron.java.warehouse.core.dao.PropertyDao;
+import hu.neuron.java.warehouse.core.entity.DeviceBasedata;
+import hu.neuron.java.warehouse.core.entity.DeviceProperty;
+import hu.neuron.java.warehouse.core.entity.Property;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -36,9 +34,11 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 @Interceptors(SpringBeanAutowiringInterceptor.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class DeviceServiceFacadeBean implements DeviceServiceFacadeBeanLocal, DeviceServiceFacadeBeanRemote {
+public class DeviceServiceFacadeBean implements DeviceServiceFacadeBeanLocal,
+		DeviceServiceFacadeBeanRemote {
 
-	private static final Logger logger = Logger.getLogger(DeviceServiceFacadeBean.class);
+	private static final Logger logger = Logger
+			.getLogger(DeviceServiceFacadeBean.class);
 
 	@Autowired
 	PropertyDao propertyDao;
@@ -51,12 +51,12 @@ public class DeviceServiceFacadeBean implements DeviceServiceFacadeBeanLocal, De
 
 	@Override
 	public List<PropertyVO> findAllProperty() throws Exception {
-		List<PropertyDTO> properties = propertyDao.findAll();
+		List<Property> properties = propertyDao.findAll();
 
 		ArrayList<PropertyVO> propertyVOs = new ArrayList<PropertyVO>();
 		PropertyVO propertyVO = null;
 
-		for (PropertyDTO property : properties) {
+		for (Property property : properties) {
 			propertyVO = new PropertyVO();
 
 			propertyVO.setId(property.getId());
@@ -69,40 +69,42 @@ public class DeviceServiceFacadeBean implements DeviceServiceFacadeBeanLocal, De
 
 	@Override
 	public List<DeviceBasedataVO> findAllDeviceBaseData() throws Exception {
-		List<DeviceBaseDataDTO> deviceBasedatas = deviceBasedataDao.findAll();
+		List<DeviceBasedata> deviceBasedatas = deviceBasedataDao.findAll();
 
 		return DeviceBaseDataConverter.toVO(deviceBasedatas);
 	}
 
 	@Override
-	public ResponseCreateDeviceVO createDevices(RequestCreateDeviceVO request) throws Exception {
+	public ResponseCreateDeviceVO createDevices(RequestCreateDeviceVO request)
+			throws Exception {
 
 		ResponseCreateDeviceVO response = new ResponseCreateDeviceVO();
 
-		if (request == null || request.getDeviceBasedatas() == null || request.getDeviceBasedatas().isEmpty()) {
+		if (request == null || request.getDeviceBasedatas() == null
+				|| request.getDeviceBasedatas().isEmpty()) {
 			return response;
 		}
 
 		Long id;
 		for (DeviceBasedataVO deviceBasedataVO : request.getDeviceBasedatas()) {
-			PropertyDTO prop = new PropertyDTO();
+			Property prop = new Property();
 			prop.setName("alma");
 			prop.setId(4L);
 
-			DevicePropertyDTO dto = new DevicePropertyDTO();
+			DeviceProperty dto = new DeviceProperty();
 			dto.setProperty(prop);
 			dto.setValue("value");
 
-			DeviceBaseDataDTO basedto = new DeviceBaseDataDTO();
+			DeviceBasedata basedto = new DeviceBasedata();
 			basedto.setDescription("sdfsfd");
 			basedto.setManufacturer("sdfsf");
 			basedto.setType("ssfd");
 			basedto.setVisible(Boolean.TRUE);
-			basedto.setProperties(new ArrayList<DevicePropertyDTO>());
+			basedto.setProperties(new ArrayList<DeviceProperty>());
 			basedto.getProperties().add(dto);
 
-			id = deviceBasedataDao.save(basedto);
-			System.out.println(id);
+			basedto = deviceBasedataDao.save(basedto);
+			System.out.println(basedto);
 			// DevicePropertyVO property =
 			// deviceBasedataVO.getProperties().get(0);
 			// DevicePropertyDTO dto = DevicePropertyConverter.toDTO(property);
@@ -118,17 +120,20 @@ public class DeviceServiceFacadeBean implements DeviceServiceFacadeBeanLocal, De
 	}
 
 	@Override
-	public ResponseCreatePropertyVO createProperties(ResponseCreatePropertyVO request) throws Exception {
+	public ResponseCreatePropertyVO createProperties(
+			ResponseCreatePropertyVO request) throws Exception {
 		ResponseCreatePropertyVO response = new ResponseCreatePropertyVO();
 
-		if (request == null || request.getProperties() == null || request.getProperties().isEmpty()) {
+		if (request == null || request.getProperties() == null
+				|| request.getProperties().isEmpty()) {
 			return response;
 		}
 
 		Long id;
 		for (PropertyVO propertyVO : request.getProperties()) {
-			id = propertyDao.save(PropertyConverter.toDTO(propertyVO));
-			propertyVO.setId(id);
+			Property property = propertyDao.save(PropertyConverter
+					.toDTO(propertyVO));
+			propertyVO.setId(property.getId());
 		}
 
 		response.setProperties(request.getProperties());

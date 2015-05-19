@@ -16,16 +16,9 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>hu.neuron.java.warehouse.ejb</groupId>
-			<artifactId>warehouse-ejb</artifactId>
-			<type>ejb-client</type>
-			<version>${version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>hu.neuron.java.warehouse.core</groupId>
-					<artifactId>warehouse-core</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>hu.neuron.java.warehouse.common</groupId>
+			<artifactId>warehouse-core-client-api</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>

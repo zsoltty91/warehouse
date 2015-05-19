@@ -1,5 +1,6 @@
 package hu.neuron.java.warehouse.core.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,7 +14,7 @@ public class DeviceProperty extends BaseEntity {
 
 	String value;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "property_fk", nullable = false)
 	Property property;
 

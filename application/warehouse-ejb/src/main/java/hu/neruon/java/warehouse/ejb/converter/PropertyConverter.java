@@ -1,14 +1,14 @@
 package hu.neruon.java.warehouse.ejb.converter;
 
+import hu.neruon.java.warehouse.ejb.client.vo.PropertyVO;
+import hu.neuron.java.warehouse.core.entity.Property;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import hu.neruon.java.warehouse.ejb.client.vo.PropertyVO;
-import hu.neuron.java.warehouse.common.dto.PropertyDTO;
-
 public class PropertyConverter {
-	public static PropertyVO toVO(PropertyDTO dto) {
+	public static PropertyVO toVO(Property dto) {
 		PropertyVO vo = new PropertyVO();
 
 		vo.setId(dto.getId());
@@ -17,18 +17,18 @@ public class PropertyConverter {
 		return vo;
 	}
 
-	public static List<PropertyVO> toVO(List<PropertyDTO> dtos) {
+	public static List<PropertyVO> toVO(List<Property> dtos) {
 		List<PropertyVO> vos = new ArrayList<>();
 
-		for (PropertyDTO dto : dtos) {
+		for (Property dto : dtos) {
 			vos.add(toVO(dto));
 		}
 
 		return vos;
 	}
 
-	public static PropertyDTO toDTO(PropertyVO vo) {
-		PropertyDTO dto = new PropertyDTO();
+	public static Property toDTO(PropertyVO vo) {
+		Property dto = new Property();
 
 		dto.setId(vo.getId());
 		dto.setName(vo.getName());
@@ -36,8 +36,8 @@ public class PropertyConverter {
 		return dto;
 	}
 
-	public static List<PropertyDTO> toDTO(Collection<PropertyVO> vos) {
-		List<PropertyDTO> dtos = new ArrayList<>();
+	public static List<Property> toDTO(Collection<PropertyVO> vos) {
+		List<Property> dtos = new ArrayList<>();
 
 		for (PropertyVO vo : vos) {
 			dtos.add(toDTO(vo));

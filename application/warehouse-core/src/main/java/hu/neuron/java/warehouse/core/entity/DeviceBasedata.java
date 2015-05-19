@@ -2,6 +2,7 @@ package hu.neuron.java.warehouse.core.entity;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -22,7 +23,7 @@ public class DeviceBasedata extends BaseEntity {
 
 	private Boolean visible;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name = "device_base_fk")
 	private Collection<DeviceProperty> properties;
 

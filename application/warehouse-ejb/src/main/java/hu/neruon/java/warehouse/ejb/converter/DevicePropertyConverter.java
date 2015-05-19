@@ -1,14 +1,14 @@
 package hu.neruon.java.warehouse.ejb.converter;
 
+import hu.neruon.java.warehouse.ejb.client.vo.DevicePropertyVO;
+import hu.neuron.java.warehouse.core.entity.DeviceProperty;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import hu.neruon.java.warehouse.ejb.client.vo.DevicePropertyVO;
-import hu.neuron.java.warehouse.common.dto.DevicePropertyDTO;
-
 public class DevicePropertyConverter {
-	public static DevicePropertyVO toVO(DevicePropertyDTO dto) {
+	public static DevicePropertyVO toVO(DeviceProperty dto) {
 		DevicePropertyVO vo = new DevicePropertyVO();
 
 		vo.setId(dto.getId());
@@ -19,18 +19,18 @@ public class DevicePropertyConverter {
 		return vo;
 	}
 
-	public static List<DevicePropertyVO> toVO(Collection<DevicePropertyDTO> dtos) {
+	public static List<DevicePropertyVO> toVO(Collection<DeviceProperty> dtos) {
 		List<DevicePropertyVO> vos = new ArrayList<>();
 
-		for (DevicePropertyDTO dto : dtos) {
+		for (DeviceProperty dto : dtos) {
 			vos.add(toVO(dto));
 		}
 
 		return vos;
 	}
 
-	public static DevicePropertyDTO toDTO(DevicePropertyVO vo) {
-		DevicePropertyDTO dto = new DevicePropertyDTO();
+	public static DeviceProperty toDTO(DevicePropertyVO vo) {
+		DeviceProperty dto = new DeviceProperty();
 
 		dto.setId(vo.getId());
 		dto.setValue(vo.getValue());
@@ -40,8 +40,8 @@ public class DevicePropertyConverter {
 		return dto;
 	}
 
-	public static List<DevicePropertyDTO> toDTO(Collection<DevicePropertyVO> vos) {
-		List<DevicePropertyDTO> dtos = new ArrayList<>();
+	public static List<DeviceProperty> toDTO(Collection<DevicePropertyVO> vos) {
+		List<DeviceProperty> dtos = new ArrayList<>();
 
 		for (DevicePropertyVO vo : vos) {
 			dtos.add(toDTO(vo));
