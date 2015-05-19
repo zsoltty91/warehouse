@@ -55,5 +55,10 @@
 		<local>hu.neruon.java.warehouse.ejb.client.service.DeviceServiceFacadeBeanLocal</local>
 	</ejb-local-ref>
 	
+	<ejb-local-ref>
+		<ejb-ref-name>hu.neuron.warehouse.ejb.WarehouseServiceFacadeBean</ejb-ref-name>
+		<local>hu.neruon.java.warehouse.ejb.client.service.WarehouseServiceFacadeBeanLocal</local>
+	</ejb-local-ref>
+	
 	<welcome-file-list><welcome-file>index.xhtml</welcome-file></welcome-file-list>
 </web-app>

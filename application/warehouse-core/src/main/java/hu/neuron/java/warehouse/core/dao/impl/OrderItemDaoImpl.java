@@ -3,7 +3,7 @@ package hu.neuron.java.warehouse.core.dao.impl;
 import hu.neuron.java.warehouse.core.dao.OrderItemDao;
 import hu.neuron.java.warehouse.core.entity.OrderItem;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -11,14 +11,14 @@ import javax.persistence.Query;
 public class OrderItemDaoImpl extends BaseDaoImpl<OrderItem> implements OrderItemDao {
 
 	@Override
-	public Collection<OrderItem> findOrderItemByOrder(Long orderId) throws Exception {
-		Collection<OrderItem> items = null;
+	public List<OrderItem> findOrderItemByOrder(Long orderId) throws Exception {
+		List<OrderItem> items = null;
 		try {
 			Query query = entityManager.createNativeQuery("SELECT o FROM order_item o WHERE o.order_fk = :pOrderId",
 					entityClass);
 			query.setParameter("pOrderId", orderId);
 
-			items = (Collection<OrderItem>) query.getResultList();
+			items = (List<OrderItem>) query.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}

@@ -5,10 +5,10 @@ import hu.neruon.java.warehouse.ejb.client.vo.WarehouseVO;
 
 import java.util.List;
 
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
-@Local
-public interface WarehouseServiceFacadeBeanLocal {
+@Remote
+public interface WarehouseServiceFacadeBeanRemote {
 
 	public List<WarehouseVO> findAllWarehouse() throws Exception;
 

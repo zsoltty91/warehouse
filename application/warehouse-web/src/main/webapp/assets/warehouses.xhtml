@@ -4,7 +4,7 @@
 	<h:form>
 		<p:panel id="devices">
 
-			<p:dialog id="create-device-panel" widgetVar="createDeviceDialog" header="#{out.newDeviceHeader}">
+			<p:dialog id="create-warehouse-panel" widgetVar="createDeviceDialog" header="#{out.newWarehouseHeader}">
 				<p:outputPanel style="float:right;">
 					<h:outputText value="#{out.property}:" />
 					<p:inputText id="property-name" value="#{deviceController.createProperty.name}" />
@@ -53,7 +53,7 @@
 				</p:outputPanel>
 			</p:dialog>
 
-			<p:commandButton type="button" onclick="PF('createDeviceDialog').show()" value="#{out.newDeviceButton}" />
+			<p:commandButton type="button" onclick="PF('createDeviceDialog').show()" value="#{out.newWarehouseButton}" />
 			<p:dataTable var="device" value="#{deviceController.deviceBasedatas}" selectionMode="single"
 				selection="#{deviceController.selectedDevice}" rowKey="#{device.id}">
 

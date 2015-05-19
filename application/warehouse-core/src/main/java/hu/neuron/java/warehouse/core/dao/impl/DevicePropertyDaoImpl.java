@@ -4,7 +4,7 @@ import hu.neuron.java.warehouse.core.dao.DevicePropertyDao;
 import hu.neuron.java.warehouse.core.entity.DeviceProperty;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -19,7 +19,7 @@ public class DevicePropertyDaoImpl extends BaseDaoImpl<DeviceProperty>
 		implements DevicePropertyDao {
 
 	@Override
-	public Collection<DeviceProperty> findDevicePropertyByDeviceBasedata(Long id) {
+	public List<DeviceProperty> findDevicePropertyByDeviceBasedata(Long id) {
 		ArrayList<DeviceProperty> propertyDtos = new ArrayList<>();
 		try {
 			Query query = entityManager

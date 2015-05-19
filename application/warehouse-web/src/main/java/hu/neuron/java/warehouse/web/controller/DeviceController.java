@@ -42,21 +42,37 @@ public class DeviceController implements Serializable {
 
 	private DevicePropertyVO createDeviceProperty;
 
+	private PropertyVO createProperty;
+
 	@PostConstruct
 	public void init() {
+		initProperties();
+		initDeviceBasedatas();
+		this.createDevice = new DeviceBasedataVO();
+		this.createProperty = new PropertyVO();
+		initCreateDeviceProperty();
+	}
+
+	private void initProperties() {
 		this.deviceProperties = new HashMap<Long, PropertyVO>();
 		try {
 			List<PropertyVO> properties = propertyService.findAllProperty();
 			for (PropertyVO property : properties) {
 				this.deviceProperties.put(property.getId(), property);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void initDeviceBasedatas() {
+		try {
 			deviceBasedatas = propertyService.findAllDeviceBaseData();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		this.createDevice = new DeviceBasedataVO();
-		initCreateDeviceProperty();
 	}
 
 	private void initCreateDeviceProperty() {
@@ -87,16 +103,33 @@ public class DeviceController implements Serializable {
 		}
 	}
 
+	public void createProperty() {
+		System.out.println(this.createProperty);
+		ArrayList<PropertyVO> properties = new ArrayList<PropertyVO>();
+		properties.add(this.createProperty);
+		try {
+			propertyService.createProperties(properties);
+			this.createProperty = new PropertyVO();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		initProperties();
+	}
+
 	public void createDevice() {
 		System.out.println(this.createDevice);
 		ArrayList<DeviceBasedataVO> deviceBasedatas = new ArrayList<DeviceBasedataVO>();
 		deviceBasedatas.add(createDevice);
 		try {
 			propertyService.createDevices(deviceBasedatas);
+			this.createDevice = new DeviceBasedataVO();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		initDeviceBasedatas();
 	}
 
 	public boolean ishasSelectedDevice() {
@@ -137,5 +170,13 @@ public class DeviceController implements Serializable {
 
 	public void setCreateDeviceProperty(DevicePropertyVO createDeviceProperty) {
 		this.createDeviceProperty = createDeviceProperty;
+	}
+
+	public PropertyVO getCreateProperty() {
+		return createProperty;
+	}
+
+	public void setCreateProperty(PropertyVO createProperty) {
+		this.createProperty = createProperty;
 	}
 }
