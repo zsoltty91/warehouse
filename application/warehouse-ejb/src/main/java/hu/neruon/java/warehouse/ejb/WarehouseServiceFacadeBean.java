@@ -2,12 +2,16 @@ package hu.neruon.java.warehouse.ejb;
 
 import hu.neruon.java.warehouse.ejb.client.service.WarehouseServiceFacadeBeanLocal;
 import hu.neruon.java.warehouse.ejb.client.service.WarehouseServiceFacadeBeanRemote;
+import hu.neruon.java.warehouse.ejb.client.vo.DeviceWarehouseInfoVO;
 import hu.neruon.java.warehouse.ejb.client.vo.OrderVO;
 import hu.neruon.java.warehouse.ejb.client.vo.WarehouseVO;
+import hu.neruon.java.warehouse.ejb.converter.DeviceWarehouseInfoConverter;
 import hu.neruon.java.warehouse.ejb.converter.OrderConverter;
 import hu.neruon.java.warehouse.ejb.converter.WarehouseConverter;
+import hu.neuron.java.warehouse.core.dao.DeviceWarehouseInfoDao;
 import hu.neuron.java.warehouse.core.dao.OrderDao;
 import hu.neuron.java.warehouse.core.dao.WarehouseDao;
+import hu.neuron.java.warehouse.core.entity.DeviceWarehouseInfo;
 import hu.neuron.java.warehouse.core.entity.Order;
 import hu.neuron.java.warehouse.core.entity.Warehouse;
 
@@ -35,6 +39,9 @@ public class WarehouseServiceFacadeBean implements WarehouseServiceFacadeBeanLoc
 
 	@Autowired
 	OrderDao orderDao;
+
+	@Autowired
+	DeviceWarehouseInfoDao deviceWarehouseInfoDao;
 
 	@Override
 	public List<WarehouseVO> findAllWarehouse() throws Exception {
@@ -101,6 +108,37 @@ public class WarehouseServiceFacadeBean implements WarehouseServiceFacadeBeanLoc
 		orderDao.update(order);
 
 		return OrderConverter.toVO(order);
+	}
+
+	@Override
+	public List<DeviceWarehouseInfoVO> findDeviceWarehouseInfos(Long warehouseId) throws Exception {
+		if (warehouseId == null) {
+			return Collections.emptyList();
+		}
+
+		List<DeviceWarehouseInfo> infos = deviceWarehouseInfoDao.findAll();
+		if (infos != null && !infos.isEmpty()) {
+			return DeviceWarehouseInfoConverter.toVO(infos);
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<DeviceWarehouseInfoVO> createDeviceWarehouseInfos(List<DeviceWarehouseInfoVO> deviceWarehouseInfos)
+			throws Exception {
+
+		if (deviceWarehouseInfos == null || deviceWarehouseInfos.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		DeviceWarehouseInfo info = null;
+		for (DeviceWarehouseInfoVO infoVO : deviceWarehouseInfos) {
+			info = deviceWarehouseInfoDao.save(DeviceWarehouseInfoConverter.toEntity(infoVO));
+			infoVO.setId(info.getId());
+		}
+
+		return deviceWarehouseInfos;
 	}
 
 }

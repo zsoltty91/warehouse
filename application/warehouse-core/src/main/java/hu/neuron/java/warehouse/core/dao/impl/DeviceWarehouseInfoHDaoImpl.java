@@ -3,7 +3,7 @@ package hu.neuron.java.warehouse.core.dao.impl;
 import hu.neuron.java.warehouse.core.dao.DeviceWarehouseInfoHDao;
 import hu.neuron.java.warehouse.core.entity.DeviceWarehouseInfoH;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -17,15 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeviceWarehouseInfoHDaoImpl extends BaseDaoImpl<DeviceWarehouseInfoH> implements DeviceWarehouseInfoHDao{
 
 	@Override
-	public Collection<DeviceWarehouseInfoH> findDeviceWarehouseInfoHsByWarehouse(
+	public List<DeviceWarehouseInfoH> findDeviceWarehouseInfoHsByWarehouse(
 			Long warehouseId) throws Exception {
-		Collection<DeviceWarehouseInfoH> ret = null;
+		List<DeviceWarehouseInfoH> ret = null;
 		try {
 			Query query = entityManager.createNativeQuery("SELECT dwih FROM device_warehouse_info_h dwih INNER JOIN device_warehouse_info dwi WHERE dwi.warehouse_fk = :pWarehouseId",
 					entityClass);
 			query.setParameter("pWarehouseId", warehouseId);
 
-			ret = (Collection<DeviceWarehouseInfoH>) query.getResultList();
+			ret = (List<DeviceWarehouseInfoH>) query.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
@@ -33,15 +33,15 @@ public class DeviceWarehouseInfoHDaoImpl extends BaseDaoImpl<DeviceWarehouseInfo
 	}
 
 	@Override
-	public Collection<DeviceWarehouseInfoH> findDeviceWarehouseInfoHsByDeviceWarehouseInfo(
+	public List<DeviceWarehouseInfoH> findDeviceWarehouseInfoHsByDeviceWarehouseInfo(
 			Long deviceWarehouseInfoId) throws Exception {
-		Collection<DeviceWarehouseInfoH> ret = null;
+		List<DeviceWarehouseInfoH> ret = null;
 		try {
 			Query query = entityManager.createNativeQuery("SELECT dwih FROM device_warehouse_info_h dwih WHERE dwih.device_warehouse_info_fk = :pDeviceWarehouseInfoId",
 					entityClass);
 			query.setParameter("pDeviceWarehouseInfoId", deviceWarehouseInfoId);
 
-			ret = (Collection<DeviceWarehouseInfoH>) query.getResultList();
+			ret = (List<DeviceWarehouseInfoH>) query.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}

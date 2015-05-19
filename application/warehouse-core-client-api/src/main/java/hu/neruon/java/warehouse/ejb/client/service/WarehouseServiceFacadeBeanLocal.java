@@ -1,5 +1,6 @@
 package hu.neruon.java.warehouse.ejb.client.service;
 
+import hu.neruon.java.warehouse.ejb.client.vo.DeviceWarehouseInfoVO;
 import hu.neruon.java.warehouse.ejb.client.vo.OrderVO;
 import hu.neruon.java.warehouse.ejb.client.vo.WarehouseVO;
 
@@ -13,11 +14,14 @@ public interface WarehouseServiceFacadeBeanLocal {
 	public List<WarehouseVO> findAllWarehouse() throws Exception;
 
 	public List<WarehouseVO> createWarehouses(List<WarehouseVO> warehouses) throws Exception;
+	
+	public List<DeviceWarehouseInfoVO> findDeviceWarehouseInfos(Long warehouseId) throws Exception;
+	
+	public List<DeviceWarehouseInfoVO> createDeviceWarehouseInfos(List<DeviceWarehouseInfoVO> deviceWarehouseInfos) throws Exception;
 
 	public List<OrderVO> findOrdersByWarehouse(Long warehouseId) throws Exception;
 
 	public List<OrderVO> createOrders(List<OrderVO> orders) throws Exception;
 
 	public OrderVO completeOrder(Long orderId) throws Exception;
-	
 }

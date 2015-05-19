@@ -2,9 +2,12 @@ package hu.neruon.java.warehouse.ejb.client.vo;
 
 import java.io.Serializable;
 
-public class DeviceWarehouseInfoVO implements Serializable {
 
-	private static final long serialVersionUID = 6903779150325185063L;
+public class DeviceWarehouseInfoVO implements Serializable{
+
+	private static final long serialVersionUID = -3995381601306519262L;
+	
+	private Long id;
 
 	private DeviceBasedataVO deviceBasedata;
 	
@@ -14,14 +17,6 @@ public class DeviceWarehouseInfoVO implements Serializable {
 	
 	public DeviceWarehouseInfoVO() {
 		super();
-	}
-
-	public DeviceWarehouseInfoVO(DeviceBasedataVO deviceBasedata,
-			WarehouseVO warehouse, Integer count) {
-		super();
-		this.deviceBasedata = deviceBasedata;
-		this.warehouse = warehouse;
-		this.count = count;
 	}
 
 	public DeviceBasedataVO getDeviceBasedata() {
@@ -47,6 +42,12 @@ public class DeviceWarehouseInfoVO implements Serializable {
 	public void setCount(Integer count) {
 		this.count = count;
 	}
-	
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
