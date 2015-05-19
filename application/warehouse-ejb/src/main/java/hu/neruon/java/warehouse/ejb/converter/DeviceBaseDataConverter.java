@@ -9,51 +9,51 @@ import java.util.List;
 
 public class DeviceBaseDataConverter {
 
-	public static DeviceBasedataVO toVO(DeviceBasedata dto) {
+	public static DeviceBasedataVO toVO(DeviceBasedata entity) {
 		DeviceBasedataVO vo = new DeviceBasedataVO();
 
-		vo.setId(dto.getId());
-		vo.setDescription(dto.getDescription());
-		vo.setManufacturer(dto.getManufacturer());
-		vo.setType(dto.getType());
-		vo.setVisible(dto.getVisible());
+		vo.setId(entity.getId());
+		vo.setDescription(entity.getDescription());
+		vo.setManufacturer(entity.getManufacturer());
+		vo.setType(entity.getType());
+		vo.setVisible(entity.getVisible());
 
-		vo.setProperties(DevicePropertyConverter.toVO(dto.getProperties()));
+		vo.setProperties(DevicePropertyConverter.toVO(entity.getProperties()));
 
 		return vo;
 	}
 
-	public static List<DeviceBasedataVO> toVO(Collection<DeviceBasedata> dtos) {
+	public static List<DeviceBasedataVO> toVO(Collection<DeviceBasedata> entities) {
 		List<DeviceBasedataVO> vos = new ArrayList<>();
 
-		for (DeviceBasedata dto : dtos) {
+		for (DeviceBasedata dto : entities) {
 			vos.add(toVO(dto));
 		}
 
 		return vos;
 	}
 
-	public static DeviceBasedata toDTO(DeviceBasedataVO vo) {
-		DeviceBasedata dto = new DeviceBasedata();
+	public static DeviceBasedata toEntity(DeviceBasedataVO vo) {
+		DeviceBasedata entity = new DeviceBasedata();
 
-		dto.setId(vo.getId());
-		dto.setDescription(vo.getDescription());
-		dto.setManufacturer(vo.getManufacturer());
-		dto.setType(vo.getType());
-		dto.setVisible(vo.getVisible());
+		entity.setId(vo.getId());
+		entity.setDescription(vo.getDescription());
+		entity.setManufacturer(vo.getManufacturer());
+		entity.setType(vo.getType());
+		entity.setVisible(vo.getVisible());
 
-		dto.setProperties(DevicePropertyConverter.toDTO(vo.getProperties()));
+		entity.setProperties(DevicePropertyConverter.toEntity(vo.getProperties()));
 
-		return dto;
+		return entity;
 	}
 
-	public static List<DeviceBasedata> toDTO(Collection<DeviceBasedataVO> vos) {
-		List<DeviceBasedata> dtos = new ArrayList<>();
+	public static List<DeviceBasedata> toEntity(Collection<DeviceBasedataVO> vos) {
+		List<DeviceBasedata> entities = new ArrayList<>();
 
 		for (DeviceBasedataVO vo : vos) {
-			dtos.add(toDTO(vo));
+			entities.add(toEntity(vo));
 		}
 
-		return dtos;
+		return entities;
 	}
 }

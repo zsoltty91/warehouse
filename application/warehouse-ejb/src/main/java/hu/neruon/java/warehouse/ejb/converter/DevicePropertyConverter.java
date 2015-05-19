@@ -8,45 +8,45 @@ import java.util.Collection;
 import java.util.List;
 
 public class DevicePropertyConverter {
-	public static DevicePropertyVO toVO(DeviceProperty dto) {
+	public static DevicePropertyVO toVO(DeviceProperty entity) {
 		DevicePropertyVO vo = new DevicePropertyVO();
 
-		vo.setId(dto.getId());
-		vo.setValue(dto.getValue());
+		vo.setId(entity.getId());
+		vo.setValue(entity.getValue());
 
-		vo.setProperty(PropertyConverter.toVO(dto.getProperty()));
+		vo.setProperty(PropertyConverter.toVO(entity.getProperty()));
 
 		return vo;
 	}
 
-	public static List<DevicePropertyVO> toVO(Collection<DeviceProperty> dtos) {
+	public static List<DevicePropertyVO> toVO(Collection<DeviceProperty> entities) {
 		List<DevicePropertyVO> vos = new ArrayList<>();
 
-		for (DeviceProperty dto : dtos) {
-			vos.add(toVO(dto));
+		for (DeviceProperty entity : entities) {
+			vos.add(toVO(entity));
 		}
 
 		return vos;
 	}
 
-	public static DeviceProperty toDTO(DevicePropertyVO vo) {
-		DeviceProperty dto = new DeviceProperty();
+	public static DeviceProperty toEntity(DevicePropertyVO vo) {
+		DeviceProperty entity = new DeviceProperty();
 
-		dto.setId(vo.getId());
-		dto.setValue(vo.getValue());
+		entity.setId(vo.getId());
+		entity.setValue(vo.getValue());
 
-		dto.setProperty(PropertyConverter.toDTO(vo.getProperty()));
+		entity.setProperty(PropertyConverter.toEntity(vo.getProperty()));
 
-		return dto;
+		return entity;
 	}
 
-	public static List<DeviceProperty> toDTO(Collection<DevicePropertyVO> vos) {
-		List<DeviceProperty> dtos = new ArrayList<>();
+	public static List<DeviceProperty> toEntity(Collection<DevicePropertyVO> vos) {
+		List<DeviceProperty> entities = new ArrayList<>();
 
 		for (DevicePropertyVO vo : vos) {
-			dtos.add(toDTO(vo));
+			entities.add(toEntity(vo));
 		}
 
-		return dtos;
+		return entities;
 	}
 }

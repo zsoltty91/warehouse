@@ -8,41 +8,41 @@ import java.util.Collection;
 import java.util.List;
 
 public class PropertyConverter {
-	public static PropertyVO toVO(Property dto) {
+	public static PropertyVO toVO(Property entity) {
 		PropertyVO vo = new PropertyVO();
 
-		vo.setId(dto.getId());
-		vo.setName(dto.getName());
+		vo.setId(entity.getId());
+		vo.setName(entity.getName());
 
 		return vo;
 	}
 
-	public static List<PropertyVO> toVO(List<Property> dtos) {
+	public static List<PropertyVO> toVO(List<Property> entities) {
 		List<PropertyVO> vos = new ArrayList<>();
 
-		for (Property dto : dtos) {
-			vos.add(toVO(dto));
+		for (Property entity : entities) {
+			vos.add(toVO(entity));
 		}
 
 		return vos;
 	}
 
-	public static Property toDTO(PropertyVO vo) {
-		Property dto = new Property();
+	public static Property toEntity(PropertyVO vo) {
+		Property entity = new Property();
 
-		dto.setId(vo.getId());
-		dto.setName(vo.getName());
+		entity.setId(vo.getId());
+		entity.setName(vo.getName());
 
-		return dto;
+		return entity;
 	}
 
-	public static List<Property> toDTO(Collection<PropertyVO> vos) {
-		List<Property> dtos = new ArrayList<>();
+	public static List<Property> toentity(Collection<PropertyVO> vos) {
+		List<Property> entities = new ArrayList<>();
 
 		for (PropertyVO vo : vos) {
-			dtos.add(toDTO(vo));
+			entities.add(toEntity(vo));
 		}
 
-		return dtos;
+		return entities;
 	}
 }

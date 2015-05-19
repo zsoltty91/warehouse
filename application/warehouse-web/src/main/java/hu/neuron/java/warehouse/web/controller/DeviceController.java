@@ -89,11 +89,10 @@ public class DeviceController implements Serializable {
 
 	public void createDevice() {
 		System.out.println(this.createDevice);
-		RequestCreateDeviceVO request = new RequestCreateDeviceVO();
-		request.setDeviceBasedatas(new ArrayList<DeviceBasedataVO>());
-		request.getDeviceBasedatas().add(createDevice);
+		ArrayList<DeviceBasedataVO> deviceBasedatas = new ArrayList<DeviceBasedataVO>();
+		deviceBasedatas.add(createDevice);
 		try {
-			propertyService.createDevices(request);
+			propertyService.createDevices(deviceBasedatas);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
