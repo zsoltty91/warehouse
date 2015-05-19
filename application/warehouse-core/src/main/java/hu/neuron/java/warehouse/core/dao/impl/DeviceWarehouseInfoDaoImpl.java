@@ -3,7 +3,7 @@ package hu.neuron.java.warehouse.core.dao.impl;
 import hu.neuron.java.warehouse.core.dao.DeviceWarehouseInfoDao;
 import hu.neuron.java.warehouse.core.entity.DeviceWarehouseInfo;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -17,15 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeviceWarehouseInfoDaoImpl extends BaseDaoImpl<DeviceWarehouseInfo> implements DeviceWarehouseInfoDao{
 
 	@Override
-	public Collection<DeviceWarehouseInfo> findDeviceWarehouseInfosByWarehouse(
+	public List<DeviceWarehouseInfo> findDeviceWarehouseInfosByWarehouse(
 			Long warehouseId) throws Exception {
-		Collection<DeviceWarehouseInfo> ret = null;
+		List<DeviceWarehouseInfo> ret = null;
 		try {
 			Query query = entityManager.createNativeQuery("SELECT dwi FROM device_warehouse_info dwi WHERE dwi.warehouse_fk = :pWarehouseId",
 					entityClass);
 			query.setParameter("pWarehouseId", warehouseId);
 
-			ret = (Collection<DeviceWarehouseInfo>) query.getResultList();
+			ret = (List<DeviceWarehouseInfo>) query.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
