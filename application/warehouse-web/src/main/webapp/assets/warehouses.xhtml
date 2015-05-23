@@ -2,97 +2,73 @@
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
 	xmlns:sec="http://www.springframework.org/security/tags">
 	<h:form>
-		<p:panel id="devices">
+		<p:panel id="warehouses">
 
-			<p:dialog id="create-warehouse-panel" widgetVar="createDeviceDialog" header="#{out.newWarehouseHeader}">
-				<p:outputPanel style="float:right;">
-					<h:outputText value="#{out.property}:" />
-					<p:inputText id="property-name" value="#{deviceController.createProperty.name}" />
-					<p:commandButton value="#{out.create}">
-						<p:ajax process="@form" listener="#{deviceController.createProperty}" update=":#{p:component('properties')}" />
-					</p:commandButton>
-				</p:outputPanel>
+			<p:dialog id="create-warehouse-panel" widgetVar="createWarehouseDialog" header="#{out.newWarehouseHeader}">
 				<p:outputPanel style="float: left;">
-					<h:outputText value="#{out.manufacturer}:" />
-					<p:inputText value="#{deviceController.createDevice.manufacturer}" />
+					<h:outputText value="#{out.warehouseName}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.name}" />
 					<br />
-					<h:outputText value="#{out.type}:" />
-					<p:inputText value="#{deviceController.createDevice.type}" />
+					<h:outputText value="#{out.warehouseAddressCountry}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressCountry}" />
 					<br />
-					<h:outputText value="#{out.description}:" />
-					<p:inputTextarea value="#{deviceController.createDevice.description}" />
+					<h:outputText value="#{out.warehouseAddressCity}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressCity}" />
 					<br />
-					<h:outputText value="#{out.visible}:" />
-					<p:selectBooleanCheckbox value="#{deviceController.createDevice.visible}"></p:selectBooleanCheckbox>
+					<h:outputText value="#{out.warehouseAddressPostcode}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressPostcode}" />
 					<br />
-					<h:outputText value="#{out.property}:" />
-					<p:selectOneMenu id="properties" value="#{deviceController.createDeviceProperty.property.id}">
-						<f:selectItems value="#{deviceController.deviceProperties}" var="deviceProperty"
-							itemLabel="#{deviceProperty.name}" itemValue="#{deviceProperty.id}" />
-					</p:selectOneMenu>
-					<p:inputText value="#{deviceController.createDeviceProperty.value}">
-					</p:inputText>
-					<p:commandButton value="#{out.add}">
-						<p:ajax listener="#{deviceController.addDeviceProperty}" update="createDeviceProperties" process="@form" />
-					</p:commandButton>
+					<h:outputText value="#{out.warehouseAddressStreet}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressStreet}" />
 					<br />
-
-					<h:outputText value="#{out.properties}:" />
+					<h:outputText value="#{out.warehouseNumber}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.number}" />
 					<br />
-					<p:dataTable id="createDeviceProperties" value="#{deviceController.createDevice.properties}" var="deviceProperty">
-						<p:column headerText="#{out.propertyName}">
-							<h:outputText value="#{deviceProperty.property.name}" />
-						</p:column>
-						<p:column headerText="#{out.propertyValue}">
-							<h:outputText value="#{deviceProperty.value}" />
-						</p:column>
-					</p:dataTable>
-					<p:commandButton value="#{out.create}">
-						<p:ajax process="@form" listener="#{deviceController.createDevice}" update="devices" />
-					</p:commandButton>
 				</p:outputPanel>
 			</p:dialog>
 
-			<p:commandButton type="button" onclick="PF('createDeviceDialog').show()" value="#{out.newWarehouseButton}" />
-			<p:dataTable var="device" value="#{deviceController.deviceBasedatas}" selectionMode="single"
-				selection="#{deviceController.selectedDevice}" rowKey="#{device.id}">
+			<p:commandButton type="button" onclick="PF('createWarehouseDialog').show()" value="#{out.newWarehouseButton}" />
+			<p:dataTable var="warehouse" value="#{warehouseController.warehouses}" selectionMode="single"
+				selection="#{warehouseController.selectedWarehouse}" rowKey="#{warehouse.id}">
 
-				<p:ajax event="rowSelect" listener="#{deviceController.onSelect}" update=":#{p:component('device-details')}" />
-				<p:ajax event="rowUnselect" listener="#{deviceController.onSelect}" update=":#{p:component('device-details')}" />
-				<p:column headerText="#{out.manufacturer}">
-					<h:outputText value="#{device.manufacturer}" />
+				<p:ajax event="rowSelect" listener="#{warehouseController.onSelect}" update=":#{p:component('warehouse-details')}" />
+				<p:ajax event="rowUnselect" listener="#{warehouseController.onSelect}" update=":#{p:component('warehouse-details')}" />
+				
+				
+				<p:column headerText="#{out.warehouseName}">
+					<h:outputText value="#{warehouse.name}" />
 				</p:column>
 
-				<p:column headerText="#{out.type}">
-					<h:outputText value="#{device.type}" />
+				<p:column headerText="#{out.warehouseAddressCountry}">
+					<h:outputText value="#{warehouse.addressCountry}" />
 				</p:column>
 
-				<p:column headerText="#{out.visible}">
-					<h:outputText value="#{out[device.visible]}" />
+				<p:column headerText="#{out.warehouseAddressCity}">
+					<h:outputText value="#{warehouse.addressCity}" />
 				</p:column>
+
+				<p:column headerText="#{out.warehouseAddressPostcode}">
+					<h:outputText value="#{warehouse.addressPostcode}" />
+				</p:column>
+
+				<p:column headerText="#{out.warehouseAddressStreet}">
+					<h:outputText value="#{warehouse.addressStreet}" />
+				</p:column>
+
+				<p:column headerText="#{out.warehouseNumber}">
+					<h:outputText value="#{warehouse.number}" />
+				</p:column>
+
 
 				<p:column headerText="#{out.operations}">
-					<h:outputText value="#{out.inactivate}" /> | 
-        <h:outputText value="#{out.uploadstore}" />
+					<h:outputText value="#{out.edit}" /> | 
+        			<h:outputText value="#{out.uploadstore}" />
 				</p:column>
 			</p:dataTable>
 
-			<p:outputPanel id="device-details">
-				<h:outputText value="#{deviceController.selectedDevice.manufacturer} #{deviceController.selectedDevice.type}" />
-				<h:outputText value="#{out.description}:" />
-				<br />
-				<h:outputText value="#{deviceController.selectedDevice.description}" />
-				<br />
-				<h:outputText value="#{out.properties}:" />
-				<br />
-				<p:dataTable value="#{deviceController.selectedDevice.properties}" var="deviceProperty">
-					<p:column headerText="#{out.propertyName}">
-						<h:outputText value="#{deviceProperty.property.name}" />
-					</p:column>
-					<p:column headerText="#{out.propertyValue}">
-						<h:outputText value="#{deviceProperty.value}" />
-					</p:column>
-				</p:dataTable>
+			<p:outputPanel id="warehouse-details">
+				<h:outputText value="#{warehouseController.selectedWarehouse.name}" />
+				
 			</p:outputPanel>
 		</p:panel>
 	</h:form>

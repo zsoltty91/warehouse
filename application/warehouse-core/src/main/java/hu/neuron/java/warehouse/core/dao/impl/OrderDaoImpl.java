@@ -3,12 +3,17 @@ package hu.neuron.java.warehouse.core.dao.impl;
 import hu.neuron.java.warehouse.core.dao.OrderDao;
 import hu.neuron.java.warehouse.core.entity.Order;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+@Repository
+@Transactional(propagation = Propagation.SUPPORTS)
 public class OrderDaoImpl extends BaseDaoImpl<Order> implements OrderDao {
 
 	@Override
