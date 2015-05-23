@@ -11,11 +11,23 @@
 	<ui:define name="pageTitle">#{out.login}</ui:define>
 	<ui:define name="content">
 		<p:tabView scrollable="true">
-			<p:tab title="#{out.devices}">
- 				<ui:include src="../assets/devices.xhtml" />
+			<p:tab title="#{out.users}">
+ 				<ui:include src="../assets/users.xhtml" />
 			</p:tab>
 			<p:tab title="#{out.warehouses}">
  				<ui:include src="../assets/warehouses.xhtml" />
+			</p:tab>
+			<p:tab title="#{out.devices}">
+ 				<ui:include src="../assets/devices.xhtml" />
+			</p:tab>
+			<p:tab title="#{out.profil}">
+ 				<ui:include src="../assets/profil.xhtml" />
+			</p:tab>
+			<p:tab title="#{out.riports}">
+ 				<ui:include src="../assets/riports.xhtml" />
+			</p:tab>
+			<p:tab title="#{out.logout}">
+ 				
 			</p:tab>
 		</p:tabView>
 	</ui:define>
