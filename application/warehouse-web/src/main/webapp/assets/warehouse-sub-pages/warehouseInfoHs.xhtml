@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+	<h:form>
+		<p:panel id="warehouseInfoHs">
+
+			<p:dialog id="create-warehouseInfoH-panel" widgetVar="createWarehouseInfoHDialog" header="#{out.newWarehouseInfoHHeader}">
+				<!-- <p:outputPanel style="float: left;">
+					<h:outputText value="#{out.warehouseName}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.name}" />
+					<br />
+					<h:outputText value="#{out.warehouseAddressCountry}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressCountry}" />
+					<br />
+					<h:outputText value="#{out.warehouseAddressCity}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressCity}" />
+					<br />
+					<h:outputText value="#{out.warehouseAddressPostcode}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressPostcode}" />
+					<br />
+					<h:outputText value="#{out.warehouseAddressStreet}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressStreet}" />
+					<br />
+					<h:outputText value="#{out.warehouseNumber}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.number}" />
+					<br />
+				</p:outputPanel> -->
+			</p:dialog>
+
+			<p:commandButton type="button" onclick="PF('createWarehouseInfoHDialog').show()" value="#{out.newWarehouseInfoHButton}" />
+			<p:dataTable var="warehouseInfoH" value="#{warehouseController.selectedWarehouseInfoHs}" selectionMode="single"
+				rowKey="#{warehouseInfoH.id}">
+				
+				
+				<p:column headerText="#{out.device}">
+					<h:outputText value="#{warehouseInfoH.deviceWarehouseInfo.deviceBasedata.manufacturer} #{warehouseInfo.deviceWarehouseInfo.deviceBasedata.type}" />
+				</p:column>
+
+				<p:column headerText="#{out.count}">
+					<h:outputText value="#{warehouseInfoH.count}" />
+				</p:column>
+
+				<p:column headerText="#{out.createrUser}">
+					<h:outputText value="#{warehouseInfoH.user.name}"/>
+				</p:column>
+
+				<p:column headerText="#{out.createDate}">
+					<h:outputText value="#{warehouseInfoH.createDate}" />
+				</p:column>
+				
+			</p:dataTable>
+
+		</p:panel>
+	</h:form>
+	
+</ui:composition>

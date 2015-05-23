@@ -1,6 +1,9 @@
 package hu.neuron.java.warehouse.web.controller;
 
 import hu.neruon.java.warehouse.ejb.client.service.WarehouseServiceFacadeBeanLocal;
+import hu.neruon.java.warehouse.ejb.client.vo.DeviceWarehouseInfoHVO;
+import hu.neruon.java.warehouse.ejb.client.vo.DeviceWarehouseInfoVO;
+import hu.neruon.java.warehouse.ejb.client.vo.OrderVO;
 import hu.neruon.java.warehouse.ejb.client.vo.WarehouseVO;
 
 import java.io.Serializable;
@@ -25,6 +28,9 @@ public class WarehouseController implements Serializable {
 	private List<WarehouseVO> warehouses;
 	private WarehouseVO newWarehouse;
 	private WarehouseVO selectedWarehouse;
+	private List<DeviceWarehouseInfoVO> selectedWarehouseInfos;
+	private List<DeviceWarehouseInfoHVO> selectedWarehouseInfoHs;
+	private List<OrderVO> selectedOrders;
 
 	@PostConstruct
 	public void init() {
@@ -42,6 +48,14 @@ public class WarehouseController implements Serializable {
 
 	public void onSelect(SelectEvent event) {
 		System.out.println("selected" + this.selectedWarehouse);
+		try {
+			selectedWarehouseInfos = warehouseService.findDeviceWarehouseInfos(selectedWarehouse.getId());
+			//selectedWarehouseInfoHs = warehouseService.findDeviceWarehouseInfoHs(selectedWarehouse.getId());
+			setSelectedOrders(warehouseService.findOrdersByWarehouse(selectedWarehouse.getId()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public List<WarehouseVO> getWarehouses() {
@@ -67,5 +81,31 @@ public class WarehouseController implements Serializable {
 	public void setSelectedWarehouse(WarehouseVO selectedWarehouse) {
 		this.selectedWarehouse = selectedWarehouse;
 	}
+
+	public List<DeviceWarehouseInfoVO> getSelectedWarehouseInfos() {
+		return selectedWarehouseInfos;
+	}
+
+	public void setSelectedWarehouseInfos(List<DeviceWarehouseInfoVO> selectedWarehouseInfos) {
+		this.selectedWarehouseInfos = selectedWarehouseInfos;
+	}
+
+	public List<DeviceWarehouseInfoHVO> getSelectedWarehouseInfoHs() {
+		return selectedWarehouseInfoHs;
+	}
+
+	public void setSelectedWarehouseInfoHs(List<DeviceWarehouseInfoHVO> selectedWarehouseInfoHs) {
+		this.selectedWarehouseInfoHs = selectedWarehouseInfoHs;
+	}
+
+	public List<OrderVO> getSelectedOrders() {
+		return selectedOrders;
+	}
+
+	public void setSelectedOrders(List<OrderVO> selectedOrders) {
+		this.selectedOrders = selectedOrders;
+	}
+
+
 
 }

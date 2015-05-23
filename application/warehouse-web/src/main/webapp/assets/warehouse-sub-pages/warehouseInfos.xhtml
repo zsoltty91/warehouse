@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+	<h:form>
+		<p:panel id="warehouseInfos">
+
+			<p:dialog id="create-warehouseInfo-panel" widgetVar="createWarehouseInfoDialog" header="#{out.newWarehouseInfoHeader}">
+				<!-- <p:outputPanel style="float: left;">
+					<h:outputText value="#{out.warehouseName}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.name}" />
+					<br />
+					<h:outputText value="#{out.warehouseAddressCountry}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressCountry}" />
+					<br />
+					<h:outputText value="#{out.warehouseAddressCity}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressCity}" />
+					<br />
+					<h:outputText value="#{out.warehouseAddressPostcode}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressPostcode}" />
+					<br />
+					<h:outputText value="#{out.warehouseAddressStreet}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.addressStreet}" />
+					<br />
+					<h:outputText value="#{out.warehouseNumber}:" />
+					<p:inputText value="#{warehouseController.newWarehouse.number}" />
+					<br />
+				</p:outputPanel> -->
+			</p:dialog>
+
+			<p:commandButton type="button" onclick="PF('createWarehouseInfoDialog').show()" value="#{out.newWarehouseInfoButton}" />
+			<p:dataTable var="warehouseInfo" value="#{warehouseController.selectedWarehouseInfos}" selectionMode="single"
+				rowKey="#{warehouseInfo.id}">
+				
+				
+				<p:column headerText="#{out.device}">
+					<h:outputText value="#{warehouseInfo.deviceBasedata.manufacturer} #{warehouseInfo.deviceBasedata.type}" />
+				</p:column>
+
+				<p:column headerText="#{out.count}">
+					<h:outputText value="#{warehouseInfo.count}" />
+				</p:column>
+
+				<p:column headerText="#{out.operations}">
+					<h:outputText value="#{out.newWarehouseInfoHButton}" />
+				</p:column>
+			</p:dataTable>
+
+		</p:panel>
+	</h:form>
+	
+</ui:composition>

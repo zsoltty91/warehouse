@@ -69,6 +69,18 @@
 			<p:outputPanel id="warehouse-details">
 				<h:outputText value="#{warehouseController.selectedWarehouse.name}" />
 				
+				<p:tabView scrollable="true" rendered="#{warehouseController.selectedWarehouse != null}">
+					<p:tab title="#{out.warehouseInfos}">
+		 				<ui:include src="../assets/warehouse-sub-pages/warehouseInfos.xhtml" />
+					</p:tab>
+					<p:tab title="#{out.warehouseInfoHs}">
+		 				<ui:include src="../assets/warehouse-sub-pages/warehouseInfoHs.xhtml" />
+					</p:tab>
+					<p:tab title="#{out.orders}">
+		 				<ui:include src="../assets/warehouse-sub-pages/orders.xhtml" />
+					</p:tab>
+				</p:tabView>
+				
 			</p:outputPanel>
 		</p:panel>
 	</h:form>

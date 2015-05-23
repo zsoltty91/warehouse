@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	
+	<h:form>
+		<p:panel id="orders">
+
+			<p:dataTable var="order" value="#{warehouseController.selectedOrders}" selectionMode="single"
+				rowKey="#{order.id}">
+				
+				
+				<p:column headerText="#{out.customerName}">
+					<h:outputText value="#{order.customerName}" />
+				</p:column>
+
+				<p:column headerText="#{out.orderIdentifier}">
+					<h:outputText value="#{order.orderIdentifier}" />
+				</p:column>
+
+				<p:column headerText="#{out.isCompleted}">
+					<h:outputText value="#{out[order.completed]}" />
+				</p:column>
+				
+				<p:column headerText="#{out.operations}">
+					<h:outputText value="#{out.seeItems}" /> | 
+        			<h:outputText value="#{out.complete}" />
+				</p:column>
+				
+			</p:dataTable>
+
+		</p:panel>
+	</h:form>
+	
+</ui:composition>
