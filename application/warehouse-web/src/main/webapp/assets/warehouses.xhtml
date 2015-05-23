@@ -24,6 +24,9 @@
 					<h:outputText value="#{out.warehouseNumber}:" />
 					<p:inputText value="#{warehouseController.newWarehouse.number}" />
 					<br />
+					<p:commandButton value="#{out.create}">
+						<p:ajax listener="#{warehouseController.addWarehouse}" update="warehouses" process="@form" />
+					</p:commandButton>
 				</p:outputPanel>
 			</p:dialog>
 

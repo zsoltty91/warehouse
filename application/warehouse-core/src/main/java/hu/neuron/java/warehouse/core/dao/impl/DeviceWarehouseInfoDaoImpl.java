@@ -21,7 +21,7 @@ public class DeviceWarehouseInfoDaoImpl extends BaseDaoImpl<DeviceWarehouseInfo>
 			Long warehouseId) throws Exception {
 		List<DeviceWarehouseInfo> ret = null;
 		try {
-			Query query = entityManager.createNativeQuery("SELECT dwi FROM device_warehouse_info dwi WHERE dwi.warehouse_fk = :pWarehouseId",
+			Query query = entityManager.createNativeQuery("SELECT dwi.* FROM device_warehouse_info dwi WHERE dwi.warehouse_fk = :pWarehouseId",
 					entityClass);
 			query.setParameter("pWarehouseId", warehouseId);
 

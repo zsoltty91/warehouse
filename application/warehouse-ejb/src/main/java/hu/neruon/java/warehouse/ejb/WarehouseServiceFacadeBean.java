@@ -116,8 +116,7 @@ public class WarehouseServiceFacadeBean implements WarehouseServiceFacadeBeanLoc
 			return Collections.emptyList();
 		}
 
-		//List<DeviceWarehouseInfo> infos = deviceWarehouseInfoDao.findDeviceWarehouseInfosByWarehouse(warehouseId);
-		List<DeviceWarehouseInfo> infos = deviceWarehouseInfoDao.findAll();
+		List<DeviceWarehouseInfo> infos = deviceWarehouseInfoDao.findDeviceWarehouseInfosByWarehouse(warehouseId);
 		if (infos != null && !infos.isEmpty()) {
 			return DeviceWarehouseInfoConverter.toVO(infos);
 		}

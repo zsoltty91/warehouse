@@ -20,7 +20,7 @@ public class OrderDaoImpl extends BaseDaoImpl<Order> implements OrderDao {
 	public List<Order> findOrdersByWarehouse(Long warehouseId) throws Exception {
 		List<Order> orders;
 		try {
-			Query query = entityManager.createNativeQuery("SELECT o FROM order o WHERE o.warehouse_fk = :pWarehouseId",
+			Query query = entityManager.createNativeQuery("SELECT o.* FROM webshop_order o WHERE o.warehouse_fk = :pWarehouseId",
 					entityClass);
 			query.setParameter("pWarehouseId", warehouseId);
 

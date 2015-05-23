@@ -4,9 +4,11 @@ import hu.neruon.java.warehouse.ejb.client.service.WarehouseServiceFacadeBeanLoc
 import hu.neruon.java.warehouse.ejb.client.vo.DeviceWarehouseInfoHVO;
 import hu.neruon.java.warehouse.ejb.client.vo.DeviceWarehouseInfoVO;
 import hu.neruon.java.warehouse.ejb.client.vo.OrderVO;
+import hu.neruon.java.warehouse.ejb.client.vo.UserVO;
 import hu.neruon.java.warehouse.ejb.client.vo.WarehouseVO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -38,6 +40,9 @@ public class WarehouseController implements Serializable {
 	}
 
 	private void initWarehouses() {
+		newWarehouse = new WarehouseVO();
+		newWarehouse.setWorkers(new ArrayList<UserVO>());
+		newWarehouse.setManagers(new ArrayList<UserVO>());
 		try {
 			this.warehouses = warehouseService.findAllWarehouse();
 		} catch (Exception e) {
@@ -45,7 +50,20 @@ public class WarehouseController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void addWarehouse(){
+		List<WarehouseVO> warehouseVOs = new ArrayList<WarehouseVO>(1);
+		warehouseVOs.add(newWarehouse);
+		try {
+			warehouseService.createWarehouses(warehouseVOs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		newWarehouse = new WarehouseVO();
+		newWarehouse.setWorkers(new ArrayList<UserVO>());
+		newWarehouse.setManagers(new ArrayList<UserVO>());
+	}
+	
 	public void onSelect(SelectEvent event) {
 		System.out.println("selected" + this.selectedWarehouse);
 		try {
