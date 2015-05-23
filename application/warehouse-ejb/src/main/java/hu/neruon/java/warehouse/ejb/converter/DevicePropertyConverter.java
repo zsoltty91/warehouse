@@ -42,9 +42,11 @@ public class DevicePropertyConverter {
 
 	public static List<DeviceProperty> toEntity(Collection<DevicePropertyVO> vos) {
 		List<DeviceProperty> entities = new ArrayList<>();
-
-		for (DevicePropertyVO vo : vos) {
-			entities.add(toEntity(vo));
+		
+		if(vos != null){
+			for (DevicePropertyVO vo : vos) {
+				entities.add(toEntity(vo));
+			}
 		}
 
 		return entities;

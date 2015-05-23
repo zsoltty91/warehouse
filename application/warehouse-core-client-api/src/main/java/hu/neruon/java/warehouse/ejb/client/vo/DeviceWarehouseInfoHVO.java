@@ -7,6 +7,8 @@ public class DeviceWarehouseInfoHVO implements Serializable{
 
 	private static final long serialVersionUID = -229530835575918390L;
 	
+	private Long id;
+	
 	private DeviceWarehouseInfoVO deviceWarehouseInfo;
 	
 	private UserVO user;
@@ -19,9 +21,11 @@ public class DeviceWarehouseInfoHVO implements Serializable{
 
 	}
 
-	public DeviceWarehouseInfoHVO(DeviceWarehouseInfoVO deviceWarehouseInfo,
-			UserVO user, Date createDate, Integer count) {
+	public DeviceWarehouseInfoHVO(Long id,
+			DeviceWarehouseInfoVO deviceWarehouseInfo, UserVO user,
+			Date createDate, Integer count) {
 		super();
+		this.id = id;
 		this.deviceWarehouseInfo = deviceWarehouseInfo;
 		this.user = user;
 		this.createDate = createDate;
@@ -58,6 +62,14 @@ public class DeviceWarehouseInfoHVO implements Serializable{
 
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

@@ -2,16 +2,24 @@ package hu.neruon.java.warehouse.ejb;
 
 import hu.neruon.java.warehouse.ejb.client.service.WarehouseServiceFacadeBeanLocal;
 import hu.neruon.java.warehouse.ejb.client.service.WarehouseServiceFacadeBeanRemote;
+import hu.neruon.java.warehouse.ejb.client.vo.DeviceBasedataVO;
+import hu.neruon.java.warehouse.ejb.client.vo.DeviceWarehouseInfoHVO;
 import hu.neruon.java.warehouse.ejb.client.vo.DeviceWarehouseInfoVO;
 import hu.neruon.java.warehouse.ejb.client.vo.OrderVO;
 import hu.neruon.java.warehouse.ejb.client.vo.WarehouseVO;
+import hu.neruon.java.warehouse.ejb.converter.DeviceBaseDataConverter;
 import hu.neruon.java.warehouse.ejb.converter.DeviceWarehouseInfoConverter;
+import hu.neruon.java.warehouse.ejb.converter.DeviceWarehouseInfoHConverter;
 import hu.neruon.java.warehouse.ejb.converter.OrderConverter;
 import hu.neruon.java.warehouse.ejb.converter.WarehouseConverter;
+import hu.neuron.java.warehouse.core.dao.DeviceBasedataDao;
 import hu.neuron.java.warehouse.core.dao.DeviceWarehouseInfoDao;
+import hu.neuron.java.warehouse.core.dao.DeviceWarehouseInfoHDao;
 import hu.neuron.java.warehouse.core.dao.OrderDao;
 import hu.neuron.java.warehouse.core.dao.WarehouseDao;
+import hu.neuron.java.warehouse.core.entity.DeviceBasedata;
 import hu.neuron.java.warehouse.core.entity.DeviceWarehouseInfo;
+import hu.neuron.java.warehouse.core.entity.DeviceWarehouseInfoH;
 import hu.neuron.java.warehouse.core.entity.Order;
 import hu.neuron.java.warehouse.core.entity.Warehouse;
 
@@ -41,8 +49,14 @@ public class WarehouseServiceFacadeBean implements WarehouseServiceFacadeBeanLoc
 	OrderDao orderDao;
 
 	@Autowired
+	DeviceBasedataDao deviceBasedataDao;
+	
+	@Autowired
 	DeviceWarehouseInfoDao deviceWarehouseInfoDao;
 
+	@Autowired
+	DeviceWarehouseInfoHDao deviceWarehouseInfoHDao;
+	
 	@Override
 	public List<WarehouseVO> findAllWarehouse() throws Exception {
 		List<Warehouse> warehouses = warehouseDao.findAll();
@@ -139,6 +153,38 @@ public class WarehouseServiceFacadeBean implements WarehouseServiceFacadeBeanLoc
 		}
 
 		return deviceWarehouseInfos;
+	}
+
+	@Override
+	public List<DeviceBasedataVO> findAllDeviceBasedata() throws Exception {
+		List<DeviceBasedata> deviceBasedatas = deviceBasedataDao.findAll();
+
+		return DeviceBaseDataConverter.toVO(deviceBasedatas);
+	}
+
+	@Override
+	public List<DeviceWarehouseInfoHVO> findDeviceWarehouseInfoHs(
+			Long warehouseId) throws Exception {
+		List<DeviceWarehouseInfoHVO> ret = DeviceWarehouseInfoHConverter.toVO(deviceWarehouseInfoHDao.findDeviceWarehouseInfoHsByWarehouse(warehouseId));
+		return ret;
+	}
+
+	@Override
+	public List<DeviceWarehouseInfoHVO> createDeviceWarehouseInfoHs(
+			List<DeviceWarehouseInfoHVO> deviceWarehouseInfoHs) throws Exception {
+
+		if (deviceWarehouseInfoHs == null || deviceWarehouseInfoHs.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		DeviceWarehouseInfoH info = null;
+		for (DeviceWarehouseInfoHVO infoVO : deviceWarehouseInfoHs) {
+			info = deviceWarehouseInfoHDao.save(DeviceWarehouseInfoHConverter.toEntity(infoVO));
+			infoVO.setId(info.getId());
+		}
+
+		return deviceWarehouseInfoHs;
+		
 	}
 
 }

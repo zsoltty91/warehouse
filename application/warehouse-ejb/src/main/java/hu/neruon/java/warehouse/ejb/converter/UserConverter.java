@@ -10,14 +10,16 @@ import java.util.List;
 public class UserConverter {
 	public static User toEntity(UserVO vo) {
 		User entity = new User();
-
-		entity.setAddress(vo.getAddress());
-		entity.setBirthday(vo.getBirthday());
-		entity.setId(vo.getId());
-		entity.setLoginName(vo.getLoginName());
-		entity.setName(vo.getLoginName());
-		entity.setRole(vo.getRole());
-
+		
+		if(vo != null){
+			entity.setAddress(vo.getAddress());
+			entity.setBirthday(vo.getBirthday());
+			entity.setId(vo.getId());
+			entity.setLoginName(vo.getLoginName());
+			entity.setName(vo.getLoginName());
+			entity.setRole(vo.getRole());
+		}
+		
 		return entity;
 	}
 
