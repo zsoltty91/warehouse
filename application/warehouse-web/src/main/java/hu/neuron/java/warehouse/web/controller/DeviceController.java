@@ -77,10 +77,14 @@ public class DeviceController implements Serializable {
 
 	private void initCreateDeviceProperty() {
 		this.createDeviceProperty = new DevicePropertyVO();
-		PropertyVO prop = deviceProperties.values().toArray(new PropertyVO[deviceProperties.values().size()])[0];
-		this.createDeviceProperty.setProperty(new PropertyVO());
-		this.createDeviceProperty.getProperty().setId(prop.getId());
-		this.createDeviceProperty.getProperty().setName(prop.getName());
+		if(deviceProperties.values().size()!=0){
+			PropertyVO prop = deviceProperties.values().toArray(new PropertyVO[deviceProperties.values().size()])[0];
+			this.createDeviceProperty.setProperty(new PropertyVO());
+			this.createDeviceProperty.getProperty().setId(prop.getId());
+			this.createDeviceProperty.getProperty().setName(prop.getName());
+		} else {
+			this.createDeviceProperty.setProperty(new PropertyVO());
+		}
 	}
 
 	public void onSelect(SelectEvent event) {
