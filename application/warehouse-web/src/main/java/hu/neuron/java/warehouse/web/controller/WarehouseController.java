@@ -92,7 +92,7 @@ public class WarehouseController implements Serializable {
 			deviceWarehouseInfoHVO.setCount(count);
 			deviceWarehouseInfoHVO.setCreateDate(new Date());
 			deviceWarehouseInfoHVO.setDeviceWarehouseInfo(createdVO);
-			//deviceWarehouseInfoHVO.setUser((SessionUtil.getActualUser((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())));
+			deviceWarehouseInfoHVO.setUser((SessionUtil.getActualUser((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())));
 			
 			deviceWarehouseInfoHs.add(deviceWarehouseInfoHVO);
 			warehouseService.createDeviceWarehouseInfoHs(deviceWarehouseInfoHs);
@@ -109,7 +109,7 @@ public class WarehouseController implements Serializable {
 		System.out.println("selected" + this.selectedWarehouse);
 		try {
 			selectedWarehouseInfos = warehouseService.findDeviceWarehouseInfos(selectedWarehouse.getId());
-			//selectedWarehouseInfoHs = warehouseService.findDeviceWarehouseInfoHs(selectedWarehouse.getId());
+			selectedWarehouseInfoHs = warehouseService.findDeviceWarehouseInfoHs(selectedWarehouse.getId());
 			setSelectedOrders(warehouseService.findOrdersByWarehouse(selectedWarehouse.getId()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

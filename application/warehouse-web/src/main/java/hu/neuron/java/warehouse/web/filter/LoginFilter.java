@@ -28,7 +28,7 @@ public class LoginFilter implements Filter{
 		if(SessionUtil.getActualUser((HttpServletRequest) arg0) == null){
 			UserVO user = new UserVO();
 			user.setId(1L);
-			//SessionUtil.setActualUser(user, (HttpServletRequest) arg0);
+			SessionUtil.setActualUser(user, (HttpServletRequest) arg0);
 		}
 		arg2.doFilter(arg0, arg1);
 	}

@@ -177,10 +177,13 @@ public class WarehouseServiceFacadeBean implements WarehouseServiceFacadeBeanLoc
 			return Collections.emptyList();
 		}
 
-		DeviceWarehouseInfoH info = null;
-		for (DeviceWarehouseInfoHVO infoVO : deviceWarehouseInfoHs) {
-			info = deviceWarehouseInfoHDao.save(DeviceWarehouseInfoHConverter.toEntity(infoVO));
-			infoVO.setId(info.getId());
+		DeviceWarehouseInfoH infoH = null;
+		for (DeviceWarehouseInfoHVO infoHVO : deviceWarehouseInfoHs) {
+			infoH = deviceWarehouseInfoHDao.save(DeviceWarehouseInfoHConverter.toEntity(infoHVO));
+			infoHVO.setId(infoH.getId());
+			
+			infoH.getDeviceWarehouseInfo().setCount(infoH.getDeviceWarehouseInfo().getCount()+infoH.getCount());
+			deviceWarehouseInfoDao.update(infoH.getDeviceWarehouseInfo());
 		}
 
 		return deviceWarehouseInfoHs;
