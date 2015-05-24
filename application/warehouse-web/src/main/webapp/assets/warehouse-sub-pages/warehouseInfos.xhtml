@@ -9,7 +9,7 @@
 				<p:outputPanel style="float: left;">
 					<h:outputText value="#{out.device}:" />
 					<p:selectOneMenu value="#{warehouseController.newDeviceWarehouseInfo.deviceBasedata.id}" filter="true" filterMatchMode="startsWith">
-						<f:selectItems value="#{warehouseController.deviceBasedatas}" var="device" itemLabel="#{device.manufacturer} #{device.type}" itemValue="#{device.id}" />
+						<f:selectItems value="#{warehouseController.avaibleDeviceBasedatas}" var="device" itemLabel="#{device.manufacturer} #{device.type}" itemValue="#{device.id}" />
 					</p:selectOneMenu>
 					<br />
 					<h:outputText value="#{out.count}:" />

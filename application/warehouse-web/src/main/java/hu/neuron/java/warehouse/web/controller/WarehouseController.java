@@ -39,8 +39,9 @@ public class WarehouseController implements Serializable {
 	private List<DeviceWarehouseInfoHVO> selectedWarehouseInfoHs;
 	private List<OrderVO> selectedOrders;
 	private DeviceWarehouseInfoVO newDeviceWarehouseInfo;
+	private DeviceWarehouseInfoHVO newDeviceWarehouseInfoH;
 	private List<DeviceBasedataVO> deviceBasedatas;
-
+	
 	@PostConstruct
 	public void init() {
 		initWarehouses();
@@ -53,6 +54,9 @@ public class WarehouseController implements Serializable {
 		newDeviceWarehouseInfo = new DeviceWarehouseInfoVO();
 		newDeviceWarehouseInfo.setDeviceBasedata(new DeviceBasedataVO());
 		newDeviceWarehouseInfo.setWarehouse(new WarehouseVO());
+		newDeviceWarehouseInfoH = new DeviceWarehouseInfoHVO();
+		newDeviceWarehouseInfoH.setDeviceWarehouseInfo(new DeviceWarehouseInfoVO());
+		newDeviceWarehouseInfoH.setUser(new UserVO());
 		deviceBasedatas = new ArrayList<DeviceBasedataVO>();
 		try {
 			deviceBasedatas = warehouseService.findAllDeviceBasedata();
@@ -105,6 +109,25 @@ public class WarehouseController implements Serializable {
 		newDeviceWarehouseInfo.setWarehouse(new WarehouseVO());
 	}
 	
+	public void addWarehouseInfoH(){
+		List<DeviceWarehouseInfoHVO> deviceWarehouseInfoHs = new ArrayList<DeviceWarehouseInfoHVO>();
+		
+		newDeviceWarehouseInfoH.setCreateDate(new Date());
+		newDeviceWarehouseInfoH.setUser((SessionUtil.getActualUser((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())));
+		
+		deviceWarehouseInfoHs.add(newDeviceWarehouseInfoH);
+		
+		try {
+			warehouseService.createDeviceWarehouseInfoHs(deviceWarehouseInfoHs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		newDeviceWarehouseInfoH = new DeviceWarehouseInfoHVO();
+		newDeviceWarehouseInfoH.setDeviceWarehouseInfo(new DeviceWarehouseInfoVO());
+		newDeviceWarehouseInfoH.setUser(new UserVO());
+	}
+	
 	public void onSelect(SelectEvent event) {
 		System.out.println("selected" + this.selectedWarehouse);
 		try {
@@ -112,7 +135,6 @@ public class WarehouseController implements Serializable {
 			selectedWarehouseInfoHs = warehouseService.findDeviceWarehouseInfoHs(selectedWarehouse.getId());
 			setSelectedOrders(warehouseService.findOrdersByWarehouse(selectedWarehouse.getId()));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -181,6 +203,42 @@ public class WarehouseController implements Serializable {
 		this.deviceBasedatas = deviceBasedatas;
 	}
 
+	public List<DeviceBasedataVO> getAvaibleDeviceBasedatas() {
+		List<DeviceBasedataVO> ret = new ArrayList<DeviceBasedataVO>();
+		
+		for(DeviceBasedataVO dbd : deviceBasedatas){
+			Boolean found = false;
+			for(DeviceBasedataVO sdbd : getSelectedWarehouseInfoDeviceBasedatas()){
+				if(sdbd.getId().equals(dbd.getId())){
+					found = true;
+					break;
+				}
+			}
+			if(!found){
+				ret.add(dbd);
+			}
+		}
+		
+		return ret;
+	}
+
+	public List<DeviceBasedataVO> getSelectedWarehouseInfoDeviceBasedatas() {
+		List<DeviceBasedataVO> ret = new ArrayList<DeviceBasedataVO>();
+		
+		for(DeviceWarehouseInfoVO dwi : selectedWarehouseInfos){
+			ret.add(dwi.getDeviceBasedata());
+		}
+		
+		return ret;
+	}
+
+	public DeviceWarehouseInfoHVO getNewDeviceWarehouseInfoH() {
+		return newDeviceWarehouseInfoH;
+	}
+
+	public void setNewDeviceWarehouseInfoH(DeviceWarehouseInfoHVO newDeviceWarehouseInfoH) {
+		this.newDeviceWarehouseInfoH = newDeviceWarehouseInfoH;
+	}
 
 
 }

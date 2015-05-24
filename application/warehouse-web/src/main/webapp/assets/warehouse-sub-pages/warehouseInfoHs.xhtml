@@ -6,26 +6,19 @@
 		<p:panel id="warehouseInfoHs">
 
 			<p:dialog id="create-warehouseInfoH-panel" widgetVar="createWarehouseInfoHDialog" header="#{out.newWarehouseInfoHHeader}">
-				<!-- <p:outputPanel style="float: left;">
-					<h:outputText value="#{out.warehouseName}:" />
-					<p:inputText value="#{warehouseController.newWarehouse.name}" />
+				<p:outputPanel style="float: left;">
+					<h:outputText value="#{out.device}:" />
+					<p:selectOneMenu value="#{warehouseController.newDeviceWarehouseInfoH.deviceWarehouseInfo.id}" filter="true" filterMatchMode="startsWith">
+						<f:selectItems value="#{warehouseController.selectedWarehouseInfos}" var="warehouseInfo" itemLabel="#{warehouseInfo.deviceBasedata.manufacturer} #{warehouseInfo.deviceBasedata.type}" itemValue="#{warehouseInfo.id}" />
+					</p:selectOneMenu>
 					<br />
-					<h:outputText value="#{out.warehouseAddressCountry}:" />
-					<p:inputText value="#{warehouseController.newWarehouse.addressCountry}" />
+					<h:outputText value="#{out.count}:" />
+					<p:inputText type="number" value="#{warehouseController.newDeviceWarehouseInfoH.count}" />
 					<br />
-					<h:outputText value="#{out.warehouseAddressCity}:" />
-					<p:inputText value="#{warehouseController.newWarehouse.addressCity}" />
-					<br />
-					<h:outputText value="#{out.warehouseAddressPostcode}:" />
-					<p:inputText value="#{warehouseController.newWarehouse.addressPostcode}" />
-					<br />
-					<h:outputText value="#{out.warehouseAddressStreet}:" />
-					<p:inputText value="#{warehouseController.newWarehouse.addressStreet}" />
-					<br />
-					<h:outputText value="#{out.warehouseNumber}:" />
-					<p:inputText value="#{warehouseController.newWarehouse.number}" />
-					<br />
-				</p:outputPanel> -->
+					<p:commandButton value="#{out.create}">
+						<p:ajax listener="#{warehouseController.addWarehouseInfoH}" update="warehouseInfoHs" process="@form" />
+					</p:commandButton>
+				</p:outputPanel>
 			</p:dialog>
 
 			<p:commandButton type="button" onclick="PF('createWarehouseInfoHDialog').show()" value="#{out.newWarehouseInfoHButton}" />

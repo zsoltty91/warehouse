@@ -9,17 +9,19 @@ import java.util.List;
 public class WarehouseConverter {
 	public static Warehouse toEntity(WarehouseVO vo) {
 		Warehouse entity = new Warehouse();
-
-		entity.setAddressCity(vo.getAddressCity());
-		entity.setAddressCountry(vo.getAddressCountry());
-		entity.setAddressPostcode(vo.getAddressPostcode());
-		entity.setAddressStreet(vo.getAddressStreet());
-		entity.setId(vo.getId());
-		entity.setManagers(UserConverter.toEntity(vo.getManagers()));
-		entity.setName(vo.getName());
-		entity.setNumber(vo.getNumber());
-		entity.setWorkers(UserConverter.toEntity(vo.getWorkers()));
-
+		
+		if(vo != null){
+			entity.setAddressCity(vo.getAddressCity());
+			entity.setAddressCountry(vo.getAddressCountry());
+			entity.setAddressPostcode(vo.getAddressPostcode());
+			entity.setAddressStreet(vo.getAddressStreet());
+			entity.setId(vo.getId());
+			entity.setManagers(UserConverter.toEntity(vo.getManagers()));
+			entity.setName(vo.getName());
+			entity.setNumber(vo.getNumber());
+			entity.setWorkers(UserConverter.toEntity(vo.getWorkers()));
+		}
+		
 		return entity;
 	}
 

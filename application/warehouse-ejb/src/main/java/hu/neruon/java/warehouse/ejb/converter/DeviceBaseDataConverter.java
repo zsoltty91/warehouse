@@ -35,15 +35,17 @@ public class DeviceBaseDataConverter {
 
 	public static DeviceBasedata toEntity(DeviceBasedataVO vo) {
 		DeviceBasedata entity = new DeviceBasedata();
-
-		entity.setId(vo.getId());
-		entity.setDescription(vo.getDescription());
-		entity.setManufacturer(vo.getManufacturer());
-		entity.setType(vo.getType());
-		entity.setVisible(vo.getVisible());
-
-		entity.setProperties(DevicePropertyConverter.toEntity(vo.getProperties()));
-
+		
+		if(vo != null){
+			entity.setId(vo.getId());
+			entity.setDescription(vo.getDescription());
+			entity.setManufacturer(vo.getManufacturer());
+			entity.setType(vo.getType());
+			entity.setVisible(vo.getVisible());
+	
+			entity.setProperties(DevicePropertyConverter.toEntity(vo.getProperties()));
+		}
+		
 		return entity;
 	}
 
