@@ -20,6 +20,17 @@
 					</p:commandButton>			
 				</p:outputPanel>
 			</p:dialog>
+			
+			<p:dialog id="create-warehouseInfoHFromInfo-panel" widgetVar="createWarehouseInfoHFromInfoDialog" header="#{out.newWarehouseInfoHHeader}">
+				<p:outputPanel style="float: left;">
+					<h:outputText value="#{out.count}:" />
+					<p:inputText type="number" value="#{warehouseController.newDeviceWarehouseInfoH.count}" />
+					<br />
+					<p:commandButton value="#{out.create}">
+						<p:ajax listener="#{warehouseController.addRowWarehouseInfoH}" update="warehouseInfos" process="@form" />
+					</p:commandButton>			
+				</p:outputPanel>
+			</p:dialog>
 
 			<p:commandButton type="button" onclick="PF('createWarehouseInfoDialog').show()" value="#{out.newWarehouseInfoButton}" />
 			<p:dataTable var="warehouseInfo" value="#{warehouseController.selectedWarehouseInfos}" selectionMode="single"
@@ -35,8 +46,12 @@
 				</p:column>
 
 				<p:column headerText="#{out.operations}">
-					<h:outputText value="#{out.newWarehouseInfoHButton}" />
+					<p:commandButton type="button" value="#{out.newWarehouseInfoHButton}">
+						<p:ajax listener="#{warehouseController.saveRowSelectedInfo}"  process="@form" />
+						<f:param name="infoId" value="#{warehouseInfo.id}"/>
+					</p:commandButton>
 				</p:column>
+				
 			</p:dataTable>
 
 		</p:panel>
