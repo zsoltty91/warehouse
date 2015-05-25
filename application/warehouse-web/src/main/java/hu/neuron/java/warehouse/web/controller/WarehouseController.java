@@ -21,6 +21,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 @ViewScoped
@@ -41,6 +42,7 @@ public class WarehouseController implements Serializable {
 	private DeviceWarehouseInfoVO newDeviceWarehouseInfo;
 	private DeviceWarehouseInfoHVO newDeviceWarehouseInfoH;
 	private List<DeviceBasedataVO> deviceBasedatas;
+	private Long rowSelectedInfoId;
 	
 	@PostConstruct
 	public void init() {
@@ -137,6 +139,34 @@ public class WarehouseController implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void saveRowSelectedInfo(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		String id = context.getExternalContext().getRequestParameterMap().get("infoId");
+		rowSelectedInfoId = Long.valueOf(id);
+		RequestContext requestContext = RequestContext.getCurrentInstance();  
+		requestContext.execute("PF('createWarehouseInfoHFromInfoDialog').show()");
+	}
+	
+	public void addRowWarehouseInfoH(){
+		List<DeviceWarehouseInfoHVO> deviceWarehouseInfoHs = new ArrayList<DeviceWarehouseInfoHVO>();
+		
+		newDeviceWarehouseInfoH.setCreateDate(new Date());
+		newDeviceWarehouseInfoH.setUser((SessionUtil.getActualUser((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest())));
+		newDeviceWarehouseInfoH.getDeviceWarehouseInfo().setId(rowSelectedInfoId);
+		
+		deviceWarehouseInfoHs.add(newDeviceWarehouseInfoH);
+		
+		try {
+			warehouseService.createDeviceWarehouseInfoHs(deviceWarehouseInfoHs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		newDeviceWarehouseInfoH = new DeviceWarehouseInfoHVO();
+		newDeviceWarehouseInfoH.setDeviceWarehouseInfo(new DeviceWarehouseInfoVO());
+		newDeviceWarehouseInfoH.setUser(new UserVO());
 	}
 	
 	public List<WarehouseVO> getWarehouses() {
@@ -238,6 +268,14 @@ public class WarehouseController implements Serializable {
 
 	public void setNewDeviceWarehouseInfoH(DeviceWarehouseInfoHVO newDeviceWarehouseInfoH) {
 		this.newDeviceWarehouseInfoH = newDeviceWarehouseInfoH;
+	}
+
+	public Long getRowSelectedInfoId() {
+		return rowSelectedInfoId;
+	}
+
+	public void setRowSelectedInfoId(Long rowSelectedInfoId) {
+		this.rowSelectedInfoId = rowSelectedInfoId;
 	}
 
 
