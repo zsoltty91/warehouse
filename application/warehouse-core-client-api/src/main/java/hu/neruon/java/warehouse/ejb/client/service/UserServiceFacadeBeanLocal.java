@@ -11,8 +11,8 @@ public interface UserServiceFacadeBeanLocal {
 	
 	public List<UserVO> findAllUser() throws Exception;
 	
-	public UserVO createUsers(List<UserVO> users) throws Exception;
+	public List<UserVO> createUsers(List<UserVO> users) throws Exception;
 	
-	public UserVO updateUsers(List<UserVO> users) throws Exception;
+	public List<UserVO> updateUsers(List<UserVO> users) throws Exception;
 	
 }

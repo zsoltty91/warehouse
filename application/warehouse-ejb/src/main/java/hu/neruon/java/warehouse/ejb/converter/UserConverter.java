@@ -46,7 +46,7 @@ public class UserConverter {
 		return vo;
 	}
 
-	public static Collection<UserVO> toVO(Collection<User> entities) {
+	public static List<UserVO> toVO(Collection<User> entities) {
 		List<UserVO> vos = new ArrayList<UserVO>();
 
 		for (User entity : entities) {

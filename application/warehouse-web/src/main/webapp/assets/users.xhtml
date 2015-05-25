@@ -1,8 +1,66 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
 	xmlns:sec="http://www.springframework.org/security/tags">
-	<h:form>
-		<p:panel id="users">
+	<h:form id="users-form">
+		<p:panel id="users-panel">
+
+			<p:dialog id="create-user-dialog" widgetVar="createUserDialog" header="#{out.users-create-new-user}">
+				<p:panel>
+					<p:outputPanel>
+						<h:outputText value="#{out.users-name}: " />
+						<p:inputText id="user-name" value="#{userController.userToCreate.name}" />
+					</p:outputPanel>
+					<p:outputPanel>
+						<h:outputText value="#{out.users-login-name}: " />
+						<p:inputText id="user-login-name" value="#{userController.userToCreate.loginName}" />
+					</p:outputPanel>
+					<p:outputPanel>
+						<h:outputText value="#{out.users-role}: " />
+						<p:selectOneMenu id="user-role-select" value="#{userController.userToCreate.role}">
+							<f:selectItem itemLabel="#{out.common.user}" itemValue="#{out.common.user}" />
+							<f:selectItem itemLabel="#{out.common.manager}" itemValue="#{out.common.manager}" />
+							<f:selectItem itemLabel="#{out.common.admin}" itemValue="#{out.common.admin}" />
+						</p:selectOneMenu>
+					</p:outputPanel>
+					<p:outputPanel>
+						<p:outputLabel for="birthday-picker" value="#{out.users-birthday}: " />
+						<p:calendar id="birthday-picker" value="#{userController.userToCreate.birthday}" />
+					</p:outputPanel>
+					<p:outputPanel>
+						<h:outputText value="#{out.users-address}: " />
+						<p:inputText id="user-address" value="#{userController.userToCreate.address}" />
+					</p:outputPanel>
+					<p:outputPanel>
+						<p:commandButton value="#{out.create}" action="#{userController.createUser}" update="users-form:users-table"/>
+					</p:outputPanel>
+				</p:panel>
+
+			</p:dialog>
+
+			<p:commandButton type="button" onclick="PF('createUserDialog').show()" value="#{out.users-create-button}" />
+			<p:dataTable id="users-table" var="user" value="#{userController.users}">
+
+				<p:column headerText="#{out.users-name}">
+					<h:outputText value="#{user.name}" />
+				</p:column>
+
+				<p:column headerText="#{out.users-login-name}">
+					<h:outputText value="#{user.loginName}" />
+				</p:column>
+
+				<p:column headerText="#{out.users-role}">
+					<h:outputText value="#{user.role}" />
+				</p:column>
+
+				<p:column headerText="#{out.users-birthday}">
+					<h:outputText value="#{user.birthday}" />
+				</p:column>
+
+				<p:column headerText="#{out.common-operations}">
+					<h:outputText value="#{out.edit}" />
+				</p:column>
+
+			</p:dataTable>
 
 		</p:panel>
 	</h:form>
