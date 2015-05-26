@@ -15,8 +15,9 @@ public class UserConverter {
 			entity.setAddress(vo.getAddress());
 			entity.setBirthday(vo.getBirthday());
 			entity.setId(vo.getId());
+			entity.setPassword(vo.getPassword());
 			entity.setLoginName(vo.getLoginName());
-			entity.setName(vo.getLoginName());
+			entity.setName(vo.getName());
 			entity.setRole(vo.getRole());
 		}
 		
@@ -39,6 +40,7 @@ public class UserConverter {
 		vo.setAddress(entity.getAddress());
 		vo.setBirthday(entity.getBirthday());
 		vo.setId(entity.getId());
+		vo.setPassword(entity.getPassword());
 		vo.setLoginName(entity.getLoginName());
 		vo.setName(entity.getLoginName());
 		vo.setRole(entity.getRole());

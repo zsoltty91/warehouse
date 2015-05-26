@@ -13,6 +13,8 @@ public class UserVO implements Serializable{
 	
 	private String loginName;
 	
+	private String password;
+	
 	private String address;
 	
 	private Date birthday;
@@ -43,6 +45,14 @@ public class UserVO implements Serializable{
 		this.loginName = loginName;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -65,5 +75,12 @@ public class UserVO implements Serializable{
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "UserVO [id=" + id + ", name=" + name + ", loginName="
+				+ loginName + ", address=" + address + ", birthday=" + birthday
+				+ ", role=" + role + "]";
 	}
 }

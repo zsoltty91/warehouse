@@ -18,6 +18,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.interceptor.Interceptors;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
@@ -27,6 +28,8 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class UserServiceFacadeBean implements UserServiceFacadeBeanLocal, UserServiceFacadeBeanRemote{
 
+	private static final Logger logger = Logger.getLogger(UserServiceFacadeBean.class);
+	
 	@Autowired
 	UserDao userDao;
 	
@@ -38,15 +41,18 @@ public class UserServiceFacadeBean implements UserServiceFacadeBeanLocal, UserSe
 	@Override
 	public List<UserVO> createUsers(List<UserVO> users) throws Exception {
 		
-		if (users == null || users.isEmpty()) {
-			return Collections.emptyList();
-		}
+		List<UserVO> storedUsers = new ArrayList<UserVO>();
 		
+		if (users == null || users.isEmpty()) {
+			return storedUsers;
+		}
+
 		User user = null;
 		
 		for (UserVO userVO: users) {
 			user = userDao.save(UserConverter.toEntity(userVO));
-			userVO.setId(user.getId());
+			storedUsers.add(UserConverter.toVO(user));
+			logger.debug(user.getId());
 		}
 		return users;
 	}
